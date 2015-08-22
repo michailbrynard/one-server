@@ -83,7 +83,6 @@ class ListGroupUsers(generics.ListCreateAPIView):
     """
     permission_classes = (IsAuthenticated, )
     authentication_classes = (JSONWebTokenAuthentication, )
-
     lookup_url_kwarg = "group"
 
     def get_serializer_class(self, *args, **kwargs):
