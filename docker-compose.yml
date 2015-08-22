@@ -1,5 +1,5 @@
-db:
-  image: postgres
+#db:
+#  image: postgres
 web:
   build: .
   command: python ./src/manage.py runserver 0.0.0.0:8000
@@ -7,5 +7,7 @@ web:
     - .:/code
   ports:
     - "8000:8000"
-  links:
-    - db
+  environment:
+    - VIRTUAL_HOST=onepi.cf,www.onepi.cf,picaday.gq,www.picaday.gq
+#  links:
+#    - db
