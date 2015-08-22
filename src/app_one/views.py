@@ -56,7 +56,7 @@ class ListUserGroup(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListUserGroupSerializer
 
     def get_queryset(self):
@@ -74,7 +74,7 @@ class ListImages(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     def get_queryset(self):
@@ -93,7 +93,7 @@ class ListImagesGroup(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     lookup_url_kwarg = "group"
