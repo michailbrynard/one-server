@@ -33,8 +33,8 @@ class OneImage(models.Model):
 
 
 class OneGroup(models.Model):
-    # User id
-    user = models.ForeignKey(UserBasic)
+    # Creator id
+    creator = models.ForeignKey(UserBasic, verbose_name='Creator')
     # Name
     group_name = models.CharField(max_length=200, null=True, blank=True)
     # Group icon

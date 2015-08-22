@@ -93,3 +93,17 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             return None
 
+
+class ListImageSerializer(serializers.ModelSerializer):
+
+    user_group = serializers.SerializerMethodField(source='get_user_group')
+
+    class Meta:
+        model = GroupImage
+        fields = ('id', 'user_group', 'image', 'created_timestamp')
+
+    def get_user_group(self, obj):
+        user_group_obj = UserGroup.objects.get(group_id=obj.id)
+        serialized_obj = UserGroupSerializer(user_group_obj, context=self.context)
+        return serialized_obj.data
+
