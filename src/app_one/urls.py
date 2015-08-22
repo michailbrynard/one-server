@@ -35,4 +35,7 @@ urlpatterns = patterns('',
     # User feed
     url(r'^groups/(?P<group>\d+)/$', views.ListGroupUsers.as_view()),    
 
+    # Images feed
+    url(r'^images/$', views.ListImages.as_view()),
+    url(r'^images/(?P<group>\d+)/$', views.ListImagesGroup.as_view()),
 )

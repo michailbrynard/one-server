@@ -7,7 +7,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from app_one.models import OneGroup, UserGroup, GroupImage
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
-    UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListGroupUsersSerializer
+    UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListGroupUsersSerializer, ListImageSerializer
 
 from administration.models import UserBasic
 
@@ -54,16 +54,10 @@ class ListUserGroup(generics.ListAPIView):
     """
     API endpoint that list the user's questions, and allows an user to create a question.
 
-    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token"
-    http://localhost:9090/api/app_one/groups/
-
-    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token"
-    -d '{"question":"Testing the tool.", "city":"2", "category":"2"}'
-    http://localhost:9090/api/app_one/groups/
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
-
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListUserGroupSerializer
 
     def get_queryset(self):
@@ -72,6 +66,7 @@ class ListUserGroup(generics.ListAPIView):
         for the currently authenticated user.
         """
         return UserGroup.objects.filter(user=self.request.user)
+
 
 # Custom Group Users view
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -131,3 +126,43 @@ class ListGroupUsers(generics.ListCreateAPIView):
         else:
             return Response({"status": "error", "message": "User is already subscribed."},
                             status=status.HTTP_403_FORBIDDEN)        
+
+
+class ListImages(generics.ListAPIView):
+    """
+    API endpoint that list the user's questions, and allows an user to create a question.
+
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
+    """
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (JSONWebTokenAuthentication, )
+    serializer_class = ListImageSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the Images related to groups.
+        """
+        user_obj = self.request.user
+        group_id_list = [x['id'] for x in user_obj.onegroup_set.values('id')]
+        return GroupImage.objects.filter(user_group_id__in=group_id_list)
+
+
+class ListImagesGroup(generics.ListAPIView):
+    """
+    API endpoint that list the user's questions, and allows an user to create a question.
+
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
+    """
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (JSONWebTokenAuthentication, )
+    serializer_class = ListImageSerializer
+
+    lookup_url_kwarg = "group"
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the images related to groups.
+        """
+        group = self.kwargs.get(self.lookup_url_kwarg)
+        user_group_obj = UserGroup.objects.get(user=self.request.user, group_id=group)
+        return GroupImage.objects.filter(user_group=user_group_obj)

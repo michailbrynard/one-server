@@ -49,7 +49,7 @@ class PasswordResetForm(forms.Form):
              use_https=False, token_generator=default_token_generator,
              from_email=None, request=None, html_email_template_name=None):
         """
-        Generates a one-use only link for resetting password and sends to the
+        Generates a one-server-use only link for resetting password and sends to the
         user.
         """
         email = self.cleaned_data["email"]

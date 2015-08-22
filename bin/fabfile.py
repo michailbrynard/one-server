@@ -8,9 +8,9 @@ def env_local():
     env.hosts = ['localhost']
     env.user = 'canary'
     # env.password = 'password'
-    env.directory = '~/Projects/one/src/'
-    # env.activate = '. ~/Projects/one/bin/activate'
-    env.activate = 'workon one'
+    env.directory = '~/Projects/one-server/src/'
+    # env.activate = '. ~/Projects/one-server/bin/activate'
+    env.activate = 'workon one-server'
 
 
 def env_staging():
@@ -19,9 +19,9 @@ def env_staging():
     env.user = 'user'
     env.keyfile = '/home/user/.ssh/id_rsa_owtk.pem'
     env.password = ''
-    env.directory = '/home/webapps/Projects/one/src/'
-    # env.activate = 'source /home/webapps/Virtualenvs/one/bin/activate'
-    env.activate = 'workon one'
+    env.directory = '/home/webapps/Projects/one-server/src/'
+    # env.activate = 'source /home/webapps/Virtualenvs/one-server/bin/activate'
+    env.activate = 'workon one-server'
 
 
 @_contextmanager

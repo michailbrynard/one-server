@@ -10,7 +10,7 @@ class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = OneGroup
-        fields = ('id', 'user', 'group_name', 'group_icon', 'status', 'created_timestamp')
+        fields = ('id', 'creator', 'group_name', 'group_icon', 'status', 'created_timestamp')
 
 
 class UserGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,7 +40,7 @@ class OneGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneGroup
-        fields = ('id', 'user', 'group_name', 'group_icon', 'status', 'created_timestamp')
+        fields = ('id', 'creator', 'group_name', 'group_icon', 'status', 'created_timestamp')
 
 
 class UserGroupSerializer(serializers.ModelSerializer):
@@ -93,6 +93,7 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             return None
 
+
 # Custom Group Users serializers
 # ---------------------------------------------------------------------------------------------------------------------#
 class ListGroupUsersSerializer(serializers.ModelSerializer):
@@ -108,9 +109,23 @@ class ListGroupUsersSerializer(serializers.ModelSerializer):
         serialized_obj = UserSerializer(user_obj, context=self.context)
         return serialized_obj.data
 
+
 class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserGroup
         fields = ('user', 'group', 'created_timestamp', 'updated_timestamp')
 
+
+class ListImageSerializer(serializers.ModelSerializer):
+
+    user_group = serializers.SerializerMethodField(source='get_user_group')
+
+    class Meta:
+        model = GroupImage
+        fields = ('id', 'user_group', 'image', 'created_timestamp')
+
+    def get_user_group(self, obj):
+        user_group_obj = UserGroup.objects.get(group_id=obj.id)
+        serialized_obj = UserGroupSerializer(user_group_obj, context=self.context)
+        return serialized_obj.data
