@@ -1,7 +1,7 @@
 import os
 import multiprocessing
 
-PROJECT_NAME = 'one'
+PROJECT_NAME = 'one-server'
 PROJ_DIR = os.path.join('/home/webapps/Projects/', PROJECT_NAME)
 proc_name = PROJECT_NAME
 # user = PROJECT_NAME

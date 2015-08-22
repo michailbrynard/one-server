@@ -61,8 +61,7 @@ class ListUserGroup(generics.ListAPIView):
     http://localhost:9090/api/app_one/groups/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
-
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListUserGroupSerializer
 
     def get_queryset(self):
@@ -85,7 +84,7 @@ class ListImages(generics.ListAPIView):
     http://localhost:9090/api/app_one/groups/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     def get_queryset(self):
@@ -109,7 +108,7 @@ class ListImagesGroup(generics.ListAPIView):
     http://localhost:9090/api/app_one/groups/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     lookup_url_kwarg = "group"

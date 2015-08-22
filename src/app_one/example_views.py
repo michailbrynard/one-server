@@ -221,7 +221,7 @@ class ChannelQuestionExpert(generics.ListCreateAPIView):
             return Response({"status": "success", "results":serializer.data},
                             status=status.HTTP_201_CREATED, headers=headers)
         else:
-            return Response({"status": "error", "message": "Only one channel response allowed. Redirect user to chat."},
+            return Response({"status": "error", "message": "Only one-server channel response allowed. Redirect user to chat."},
                             status=status.HTTP_403_FORBIDDEN)
 
 
