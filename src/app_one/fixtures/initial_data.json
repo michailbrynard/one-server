@@ -53,5 +53,110 @@
       "created_timestamp": "2015-08-1 11:04",
       "updated_timestamp": "2015-08-1 11:04"
     }
+  },
+  {
+    "model": "app_one.usergroup",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "group": 1,
+      "created_timestamp": "2015-08-1 11:04",
+      "updated_timestamp": "2015-08-1 11:04"      
+    }
+  },
+  {
+    "model": "app_one.usergroup",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "group": 2,
+      "created_timestamp": "2015-08-1 11:05",
+      "updated_timestamp": "2015-08-1 11:05"  
+    }
+  },
+  {
+    "model": "app_one.usergroup",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "group": 3,
+      "created_timestamp": "2015-08-1 11:06",
+      "updated_timestamp": "2015-08-1 11:06"  
+    }
+  },
+  {
+    "model": "app_one.usergroup",
+    "pk": 4,
+    "fields": {
+      "user": 3,
+      "group": 4,
+      "created_timestamp": "2015-08-1 11:07",
+      "updated_timestamp": "2015-08-1 11:07"  
+    }
+  },
+  {
+    "model": "app_one.usergroup",
+    "pk": 5,
+    "fields": {
+      "user": 3,
+      "group": 5,
+      "created_timestamp": "2015-08-1 11:08",
+      "updated_timestamp": "2015-08-1 11:08"  
+    }
+  },
+  {
+    "model": "app_one.groupimage",
+    "pk": 1,
+    "fields": {
+      "user_group": 1,
+      "image": "http://onehdwallpaper.com/wp-content/uploads/2015/07/Beautiful-Scenery-HD-Wallpapers-Pictures.jpg",
+      "description": "Whatever",
+      "created_timestamp": "2015-08-1 11:04",
+      "updated_timestamp": "2015-08-1 11:04"  
+    }
+  },
+  {
+    "model": "app_one.groupimage",
+    "pk": 2,
+    "fields": {
+      "user_group": 1,
+      "image": "http://www.lovethispic.com/uploaded_images/37155-Autumn-Scenery.jpeg",
+      "description": "Whatever",
+      "created_timestamp": "2015-08-1 11:05",
+      "updated_timestamp": "2015-08-1 11:05"  
+    }
+  },
+  {
+    "model": "app_one.groupimage",
+    "pk": 3,
+    "fields": {
+      "user_group": 2,
+      "image": "http://img.inspiringwallpapers.net/wp-content/uploads/2013/09/autumn-scenery-of-forest-path-730x400.jpg",
+      "description": "Whatever",
+      "created_timestamp": "2015-08-1 11:06",
+      "updated_timestamp": "2015-08-1 11:06"  
+    }
+  },
+  {
+    "model": "app_one.groupimage",
+    "pk": 4,
+    "fields": {
+      "user_group": 3,
+      "image": "http://mizzhai.weebly.com/uploads/3/0/6/4/30648975/3518928_orig.jpg",
+      "description": "Whatever",
+      "created_timestamp": "2015-08-1 11:07",
+      "updated_timestamp": "2015-08-1 11:07"  
+    }
+  },
+  {
+    "model": "app_one.groupimage",
+    "pk": 5,
+    "fields": {
+      "user_group": 4,
+      "image": "https://media-cdn.tripadvisor.com/media/photo-s/01/48/61/6c/beautiful-scenery-around.jpg",
+      "description": "Whatever",
+      "created_timestamp": "2015-08-1 11:08",
+      "updated_timestamp": "2015-08-1 11:08"  
+    }
   }
 ]
