@@ -93,3 +93,24 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
         except ObjectDoesNotExist:
             return None
 
+# Custom Group Users serializers
+# ---------------------------------------------------------------------------------------------------------------------#
+class ListGroupUsersSerializer(serializers.ModelSerializer):
+
+    user = serializers.SerializerMethodField(source='get_user')
+
+    class Meta:
+        model = UserGroup
+        fields = ('user', 'created_timestamp', 'updated_timestamp')
+
+    def get_user(self, obj):
+        user_obj = UserBasic.objects.get(id=obj.user_id)
+        serialized_obj = UserSerializer(user_obj, context=self.context)
+        return serialized_obj.data
+
+class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserGroup
+        fields = ('user', 'group', 'created_timestamp', 'updated_timestamp')
+

@@ -150,6 +150,16 @@
     }
   },
   {
+    "model": "app_one.usergroup",
+    "pk": 6,
+    "fields": {
+      "user": 4,
+      "group": 1,
+      "created_timestamp": "2015-08-1 11:09",
+      "updated_timestamp": "2015-08-1 11:09"  
+    }
+  },
+  {
     "model": "app_one.groupimage",
     "pk": 1,
     "fields": {
