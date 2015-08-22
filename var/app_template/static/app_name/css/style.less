@@ -1,0 +1,266 @@
+/** --------------------------------------------------------*
+ *  GLOBAL VARIABLES 
+ * ---------------------------------------------------------*
+ */
+
+@WHITE: rgb(255, 255, 255);
+
+
+/** --------------------------------------------------------*
+ *  PRINT DESIGN 
+ * ---------------------------------------------------------*
+ */
+
+@page {
+  size: A4 landscape;
+  margin: 2cm;
+}
+
+@page
+  @bottom-left {
+    color: @EOH_BLUE;
+    font-family: Arial, sans-serif;
+    font-size: 80%;
+    content: "EOH Service Level Agreement Report";
+  }
+
+@page
+  @bottom-right {
+    color: @EOH_BLUE;
+    font-family: Arial, sans-serif;
+    font-size: 80%;
+    content: counter(page);
+  }
+
+
+@page :first
+  @bottom-right {
+    content: none;
+  }
+
+
+/** ---MEDIA:SCREEN----------------------------------*/
+@media screen {
+  .footer, .header, .frontpage, .topleft {
+    display: none;
+  }
+}
+
+@media (min-width: 1700px) {
+  #contents.report {
+    width: 100%;
+    margin-left: 30%;
+    float: left;
+  }
+}
+
+@media (min-width: 1200px) AND (max-width: 1700px) {
+  #contents.report {
+    margin-right: 2%;
+    margin-left: 310px;
+  }
+}
+
+@media (min-width: 900px) AND (max-width: 1200px) {
+  #contents.report {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  #toc {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  #contents.report {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  #toc {
+    display: none;
+  }
+}
+
+div#contents.content.iris {
+  max-width: 2000px;
+  width: 95%;
+}
+
+/** ---MEDIA:PRINT-----------------------------------*/
+@media print {
+
+  .frontpage {
+    text-align: center;
+    margin-top: 25%;
+    h1, h2 {
+      color: @EOH_BLUE;
+    }
+  }
+
+  .header {
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+    width: 100%;
+    text-align: right;
+    top: -1.6cm;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: -1.7cm;
+    width: 100%;
+    text-align: center;
+  }
+
+  .topleft {
+    color: @EOH_BLUE;
+    font-family: Arial, sans-serif;
+    font-size: 80%;
+    position: fixed;
+    top: -1.4cm;
+  }
+
+  .bottomleft {
+    color: @EOH_BLUE;
+    position: fixed;
+    bottom: -1.1cm;
+  }
+
+  .content h1 {
+    page-break-before: always
+  }
+
+  .content p.newpage {
+    page-break-before: always;
+  }
+
+  .hidden-print {
+    display: none;
+  }
+}
+
+.anchor {
+  position: absolute;
+  margin: -5.0em
+}
+
+/** --------------------------------------------------------*
+ *  LOGIN PAGE
+ * ---------------------------------------------------------*
+ */
+
+body.login {
+  padding-top: 10px;
+  padding-bottom: 40px;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 25px auto 0;
+}
+
+h1.form-signin-heading {
+  margin-top: 60px;
+  margin-bottom: 40px;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="text"] {
+  margin-bottom: -5px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+
+input,
+button {
+  line-height: inherit;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.form-signin .form-control {
+  display: block;
+  width: 100%;
+  line-height: 1.42857143;
+  border: 1px solid #cccccc;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 4px;
+
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-signin .form-control:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.form-signin  .form-control::-moz-placeholder {
+  color: #999999;
+  opacity: 1;
+}
+
+.form-signin .form-control:-ms-input-placeholder {
+  color: #999999;
+}
+
+.form-signin .btn {
+
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 6px;
+
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+
+
+}
+
+.form-signin .alert-danger {
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  color: #a94442;
+}

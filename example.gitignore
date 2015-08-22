@@ -1,0 +1,27 @@
+__pycache__
+
+# EXTENSIONS
+*.log
+*.bak
+*.sock
+*.xls*
+*.csv
+*.pyc
+*.pyo
+*~
+
+# CONTENT
+var/cache/*
+var/www/static/*
+var/www/media/*
+tmp/*
+
+# FILES
+django.db
+workspace.xml
+.DS_Store
+
+# FOLDERS
+bower_components
+node_packages
+.ipynb_checkpoints

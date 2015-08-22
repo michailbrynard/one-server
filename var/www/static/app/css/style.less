@@ -1,0 +1,166 @@
+// BOOTSTRAP BASE
+// ----------------------------------------------- //
+@import "../bower_components/bootstrap/less/bootstrap.less";
+
+@import "../bower_components/bootswatch/simplex/variables.less";
+@import "../bower_components/bootswatch/simplex/bootswatch.less";
+// maybe need to import bootstrap utilities here..?
+
+@import (less) "../bower_components/select2/select2.css";
+@import (less) "../bower_components/select2/select2-bootstrap.css";
+
+//@body-bg:     red;
+//@text-color:  green;
+
+// GLOBAL
+// ----------------------------------------------- //
+@gsma_p0: #000000;
+@gsma_p1: #981E32;
+@gsma_p2: #E00034;
+@gsma_p3: #D47B22;
+@gsma_p4: #55517B;
+@gsma_p5: #005092;
+@gsma_p6: #A4AEB5;
+@gsma_p7: #A1B9AF;
+@gsma_p8: #DAD7CB;
+
+@background_colour: @gsma_p8;
+@border_colour: @gsma_p4;
+@shadow_colour: fadeout(@gsma_p2, 10%);
+
+@nav_height: 100px;
+@footer_height: 60px;
+
+body {
+  padding-top: @nav_height;
+  margin-bottom: @footer_height;
+  font-size: 14px;
+}
+
+a {
+  color: @gsma_p2;
+}
+
+//label {
+//  font-weight: bold;
+//}
+
+
+.jumbotron {
+  p, ul {
+    font-size: 16px;
+  }
+}
+
+.anti-well {
+  padding: 3px 0;
+  background-color: inherit;
+  border: none;
+}
+
+//.btn, .btn-primary {
+//  background-color: @gsma_p2;
+//}
+
+// NAVBAR
+// ----------------------------------------------- //
+.navbar-default {
+  min-height: @nav_height;
+  height: @nav_height;
+
+  background-color: @background_colour;
+  border-color: @border_colour;
+  box-shadow: @shadow_colour 0 0 0 1px;
+
+  .navbar-nav > li > a {
+    line-height: @nav_height;
+    height: (@nav_height - 2px);
+    padding-top: 15px;
+    font-size: 26px;
+  }
+  .navbar-header {
+    min-height: @nav_height;
+    height: @nav_height;
+  }
+  .navbar-brand {
+    min-height: @nav_height;
+    height: @nav_height;
+    padding: 0;
+    > img {
+      padding: 18px;
+      height: 100px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-default .navbar-nav > li > a {
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-default .navbar-nav > li > a {
+    visibility: visible;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar-default .navbar-nav > li > a {
+    visibility: visible;
+  }
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #D9230F;
+  background-color: @background_colour;
+}
+
+p.disclaimer {
+  font-size: 1.2em;
+  text-align: justify;
+}
+
+div.panel.panel-default {
+  box-shadow: @shadow_colour 1px 1px 1px 1px;
+}
+
+.container .text-muted {
+  margin: 20px 0;
+  font-size: 125%;
+}
+
+.select2-container.select2-container-multi {
+  width: 100%;
+  min-height: 36px;
+  border-radius: 0px;
+}
+
+#section_tabs {
+  font-size: 16px;
+  //  position: fixed;
+  //  top: 100px;
+  //  background-color: #005092;
+}
+
+// FOOTER
+// ----------------------------------------------- //
+footer.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: @footer_height;
+  background-color: @background_colour;
+  border: 0 solid @border_colour;
+  border-top-width: 1px;
+  box-shadow: @shadow_colour 1px 0 0 0;
+}
+
+#whisper {
+  font-size: 80%;
+  color: fadeout(@gsma_p6, 50%);
+  position: fixed;
+  right: 2%;
+}

@@ -1,0 +1,46 @@
+{
+  "name": "djSkel",
+  "version": "0.0.1",
+  "authors": [
+    "JR Minnaar <jr.minnaar@gmail.com>"
+  ],
+  "description": "Skeleton JavaScript app for use with Django djSkel",
+  "main": [
+    "css/style.css",
+    "js/main.js"
+  ],
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "Bootstrap",
+    "jQuery",
+    "Require.js"
+  ],
+  "license": "MIT",
+  "homepage": "obitec.github.io/djskel",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests",
+    "Gruntfile.js",
+    "build",
+    "dist",
+    "*.md",
+    "AUTHORS.txt",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "dependencies": {
+    "jquery": "1.11.2",
+    "bootstrap": "~3.3.1",
+    "requirejs": "~2.1.15",
+    "select2": "3.5.2",
+    "jquery-cookie": "~1.4.1",
+    "bootswatch": "~3.3.1+2",
+    "multiline": "~1.0.2"
+  }
+}

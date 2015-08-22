@@ -1,0 +1,90 @@
+[
+  {
+    "model": "administration.userbasic",
+    "pk": 3,
+    "fields": {
+      "username": "test1",
+      "email": "test1@zapgo.co",
+      "first_name": "Test1",
+      "last_name": "Tester1",
+      "password": "pbkdf2_sha256$20000$ACbcik0ZVQNS$to3PT9yqz67apcjJsFMDjRTXNwRUgcaCT0K01pLINC4="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 4,
+    "fields": {
+      "username": "test2",
+      "email": "test2@zapgo.co",
+      "first_name": "Test2",
+      "last_name": "Tester2",
+      "password": "pbkdf2_sha256$20000$mQLxzF4CuR8z$Qz3sa0uET/cwsgS6ocl0VGKWthP7jYFaOHbU2LoUGdY="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 5,
+    "fields": {
+      "username": "test3",
+      "email": "test3@zapgo.co",
+      "first_name": "Test3",
+      "last_name": "Tester3",
+      "password": "pbkdf2_sha256$20000$mxGLZASfeAtw$NrgQnIksnAdwIaEm1KoQcooXlnRyu+AEuVvTa3YBgAU="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 6,
+    "fields": {
+      "username": "test4",
+      "email": "test4@zapgo.co",
+      "first_name": "Test4",
+      "last_name": "Tester4",
+      "password": "pbkdf2_sha256$20000$4DRFwuwWUA39$x+NtM+mk1RKCwWs5cE663Zfsal29pwIV+3WK6QRoqkQ="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 7,
+    "fields": {
+      "username": "test5",
+      "email": "test5@zapgo.co",
+      "first_name": "Test5",
+      "last_name": "Tester5",
+      "password": "pbkdf2_sha256$20000$a7vSreAYtd3e$K1ozQd3gGrLI6GAvnnqjg7Eb5PFsAEPkUss/XsEIZ+k="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 8,
+    "fields": {
+      "username": "expert1",
+      "email": "expert1@zapgo.co",
+      "first_name": "Expert1",
+      "last_name": "Expert1",
+      "password": "pbkdf2_sha256$20000$aLSRFpz4vUfN$20J+vY0SGnSlzW2kFWJBPhMwlQvJ1oD7iy7Wrepa3ME="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 9,
+    "fields": {
+      "username": "expert2",
+      "email": "expert2@zapgo.co",
+      "first_name": "Expert2",
+      "last_name": "Expert2",
+      "password": "pbkdf2_sha256$20000$BJMJ0i8xtNp8$LUwgsBY3EuJ8ri9TmNpMIxgiKbNZQs9Xmm21UhgelKE="
+    }
+  },
+  {
+    "model": "administration.userbasic",
+    "pk": 10,
+    "fields": {
+      "username": "expert3",
+      "email": "expert3@zapgo.co",
+      "first_name": "Expert3",
+      "last_name": "Expert3",
+      "password": "pbkdf2_sha256$20000$bGlLFCxMawYe$FVOUBf7k38Cw+LP8dl+uK+tZOsqhnEm4P6YXS8s0dL0="
+    }
+  }
+]

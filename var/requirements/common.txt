@@ -1,0 +1,32 @@
+# Django
+# --------------------------------------
+django>=1.7
+
+
+# Extensions
+# --------------------------------------
+django-grappelli
+django-object-tools
+django-reversion
+django-filebrowser
+django-filter
+django-import-export
+django-tinymce
+django-guardian
+django-ckeditor-updated
+django-bootstrap3
+django-report-builder
+django-allauth==0.22.0
+django-cities-light==3.1.2
+django-cors-headers==1.1.0
+django-rest-auth==0.4.0
+django-rest-swagger==0.3.3
+djangorestframework==3.2.2
+djangorestframework-jwt==1.6.0
+
+
+# Core
+# --------------------------------------
+requests
+pillow
+pyaml
