@@ -1,4 +1,6 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
+from rest_framework.response import Response
+from rest_framework import status
 
 from app_one.models import OneGroup, UserGroup, GroupImage
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
@@ -6,11 +8,14 @@ from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerialize
 
 from administration.models import UserBasic
 
+
 import json
 
 
 # Hyper Views
 # ---------------------------------------------------------------------------------------------------------------------#
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 class OneGroupHyper(viewsets.ModelViewSet):
@@ -43,3 +48,46 @@ class UserHyper(viewsets.ModelViewSet):
     """
     queryset = UserBasic.objects.all()
     serializer_class = UserHyperSerializer
+
+
+# Custom Views
+# ---------------------------------------------------------------------------------------------------------------------#
+class ListCreateUserGroup(generics.ListCreateAPIView):
+    """
+    API endpoint that list the user's questions, and allows an user to create a question.
+
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token"
+    http://localhost:9090/api/app_one/groups/
+
+    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token"
+    -d '{"question":"Testing the tool.", "city":"2", "category":"2"}'
+    http://localhost:9090/api/app_one/groups/
+    """
+    permission_classes = (IsAuthenticated, )
+    authentication_classes = (JSONWebTokenAuthentication, )
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.method == 'POST':
+            return CreateUserGroupSerializer
+        return ListUserGroupSerializer
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the questions
+        for the currently authenticated user.
+        """
+        return UserGroup.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response({"status": "success", "results": serializer.data},
+                        status=status.HTTP_201_CREATED, headers=headers)

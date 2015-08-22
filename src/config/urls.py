@@ -22,6 +22,6 @@ urlpatterns = patterns('',
     url(r'^docs/', include('rest_framework_swagger.urls')),
 
     # One app
-    url(r'^app_one/', include('app_one.urls')),
+    url(r'^api/app_one/', include('app_one.urls')),
 
 )+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

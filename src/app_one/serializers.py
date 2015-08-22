@@ -34,7 +34,7 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'username', 'first_name', 'last_name', 'birthday', 'gender', 'email', 'language', 'bio')
 
 
-# Custom Serializers
+# Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneGroupSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -62,4 +62,29 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserBasic
         fields = ('id', 'username', 'first_name', 'last_name', 'birthday', 'gender', 'email', 'language', 'bio')
+
+
+# Custom Serializers
+# ---------------------------------------------------------------------------------------------------------------------#
+class ListUserGroupSerializer(serializers.ModelSerializer):
+
+    last_upload = serializers.SerializerMethodField(source='get_last_upload')
+
+    class Meta:
+        model = UserGroup
+        fields = ('user', 'group_name', 'group_icon', 'created_timestamp', 'last_upload')
+
+    def get_last_upload(self, obj):
+        try:
+            latest = GroupImage.objects.latest(group=obj.id)
+            return latest.created_timestamp
+        except ObjectDoesNotExist:
+            return None
+
+
+class CreateUserGroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = UserGroup
+        fields = ('user', 'group_name', 'group_icon', 'created_timestamp')
 
