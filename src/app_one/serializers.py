@@ -10,7 +10,7 @@ class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = OneGroup
-        fields = ('id', 'user', 'group_name', 'group_icon', 'status', 'created_timestamp')
+        fields = ('id', 'creator', 'group_name', 'group_icon', 'status', 'created_timestamp')
 
 
 class UserGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -40,7 +40,7 @@ class OneGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneGroup
-        fields = ('id', 'user', 'group_name', 'group_icon', 'status', 'created_timestamp')
+        fields = ('id', 'creator', 'group_name', 'group_icon', 'status', 'created_timestamp')
 
 
 class UserGroupSerializer(serializers.ModelSerializer):
