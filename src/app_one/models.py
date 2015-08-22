@@ -23,6 +23,15 @@ def get_group_icon_path(instance, filename):
     return os.path.join('group_icon', str(instance.id), filename)
 
 
+class OneImage(models.Model):
+    # User id
+    user = models.ForeignKey(UserBasic)
+    # Image
+    image = models.FileField(upload_to=get_one_images_path, null=True, blank=True)
+    # Description
+    description = models.CharField(max_length=200, null=True, blank=True)
+
+
 class OneGroup(models.Model):
     # User id
     user = models.ForeignKey(UserBasic)
@@ -86,10 +95,8 @@ class UserGroup(models.Model):
 class GroupImage(models.Model):
     # Group id
     user_group = models.ForeignKey(UserGroup)
-    # Image field
-    image = models.FileField(upload_to=get_one_images_path, null=True, blank=True)
-    # Description
-    description = models.CharField(max_length=200, null=True, blank=True)
+    # Image id
+    image = models.ForeignKey(OneImage)
     # Timestamp
     created_timestamp = models.DateTimeField(auto_now_add=True)
     updated_timestamp = models.DateTimeField(auto_now=True)

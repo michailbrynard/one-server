@@ -1,5 +1,7 @@
-# LOGGING
+# IMPORTS
 # ---------------------------------------------------------------------------------------------------------------------#
+from django.conf.urls import patterns, url, include
+
 import logging
 from django.contrib import admin
 from rest_framework import routers
@@ -8,13 +10,10 @@ from app_one import views
 admin.autodiscover()
 
 
+# LOGGING
+# ---------------------------------------------------------------------------------------------------------------------#
 logger = logging.getLogger('django')
 
-
-# IMPORTS
-# ---------------------------------------------------------------------------------------------------------------------#
-# conf.urls
-from django.conf.urls import patterns, url, include
 
 # ROUTERS
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -29,5 +28,8 @@ urlpatterns = patterns('',
 
     # Router fields - API
     url(r'^', include(router.urls)),
+
+    # Group feed
+    url(r'^groups/$', views.ListUserGroup.as_view()),
 
 )

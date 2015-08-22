@@ -6,7 +6,7 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from app_one.models import OneGroup, UserGroup, GroupImage
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
-    UserHyperSerializer, ListUserGroupSerializer, CreateUserGroupSerializer
+    UserHyperSerializer, ListUserGroupSerializer
 
 from administration.models import UserBasic
 
@@ -49,7 +49,7 @@ class UserHyper(viewsets.ModelViewSet):
 
 # Custom Views
 # ---------------------------------------------------------------------------------------------------------------------#
-class ListCreateUserGroup(generics.ListCreateAPIView):
+class ListUserGroup(generics.ListAPIView):
     """
     API endpoint that list the user's questions, and allows an user to create a question.
 
@@ -61,12 +61,9 @@ class ListCreateUserGroup(generics.ListCreateAPIView):
     http://localhost:9090/api/app_one/groups/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
 
-    def get_serializer_class(self, *args, **kwargs):
-        if self.request.method == 'POST':
-            return CreateUserGroupSerializer
-        return ListUserGroupSerializer
+    serializer_class = ListUserGroupSerializer
 
     def get_queryset(self):
         """
@@ -74,17 +71,3 @@ class ListCreateUserGroup(generics.ListCreateAPIView):
         for the currently authenticated user.
         """
         return UserGroup.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response({"status": "success", "results": serializer.data},
-                        status=status.HTTP_201_CREATED, headers=headers)

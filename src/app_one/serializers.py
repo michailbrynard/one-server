@@ -36,28 +36,28 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
-class OneGroupSerializer(serializers.HyperlinkedModelSerializer):
+class OneGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneGroup
         fields = ('id', 'user', 'group_name', 'group_icon', 'status', 'created_timestamp')
 
 
-class UserGroupSerializer(serializers.HyperlinkedModelSerializer):
+class UserGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserGroup
         fields = ('id', 'user', 'group', 'status', 'created_timestamp')
 
 
-class GroupImageSerializer(serializers.HyperlinkedModelSerializer):
+class GroupImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = GroupImage
         fields = ('id', 'user_group', 'image', 'created_timestamp')
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserBasic
@@ -68,23 +68,28 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 # ---------------------------------------------------------------------------------------------------------------------#
 class ListUserGroupSerializer(serializers.ModelSerializer):
 
+    user = serializers.SerializerMethodField(source='get_user')
+    group = serializers.SerializerMethodField(source='get_group')
     last_upload = serializers.SerializerMethodField(source='get_last_upload')
 
     class Meta:
         model = UserGroup
-        fields = ('user', 'group_name', 'group_icon', 'created_timestamp', 'last_upload')
+        fields = ('user', 'group', 'created_timestamp', 'last_upload')
+
+    def get_user(self, obj):
+        user_obj = UserBasic.objects.get(id=obj.user_id)
+        serialized_obj = UserSerializer(user_obj, context=self.context)
+        return serialized_obj.data
+
+    def get_group(self, obj):
+        group_obj = OneGroup.objects.get(id=obj.group_id)
+        serialized_obj = OneGroupSerializer(group_obj, context=self.context)
+        return serialized_obj.data
 
     def get_last_upload(self, obj):
         try:
-            latest = GroupImage.objects.latest(group=obj.id)
+            latest = GroupImage.objects.filter(user_group=obj.id).latest('created_timestamp')
             return latest.created_timestamp
         except ObjectDoesNotExist:
             return None
-
-
-class CreateUserGroupSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = UserGroup
-        fields = ('user', 'group_name', 'group_icon', 'created_timestamp')
 
