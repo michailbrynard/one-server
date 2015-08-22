@@ -1,23 +1,20 @@
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from app_one.models import OneGroup, UserGroup, GroupImage
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
-    UserHyperSerializer
+    UserHyperSerializer, ListUserGroupSerializer, CreateUserGroupSerializer
 
 from administration.models import UserBasic
-
 
 import json
 
 
 # Hyper Views
 # ---------------------------------------------------------------------------------------------------------------------#
-from rest_framework.permissions import IsAuthenticated
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
-
 class OneGroupHyper(viewsets.ModelViewSet):
     """
     API endpoint that allows cities to be viewed or edited.
