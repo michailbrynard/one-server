@@ -167,7 +167,7 @@ class ListImages(generics.ListAPIView):
         """
         user_obj = self.request.user
         group_id_list = [x['id'] for x in user_obj.onegroup_set.values('id')]
-        return GroupImage.objects.filter(user_group_id__in=group_id_list)
+        return GroupImage.objects.filter(user_group_id__in=group_id_list).distinct('id')
 
 
 class ListImageGroups(generics.ListAPIView):
@@ -177,7 +177,7 @@ class ListImageGroups(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
     permission_classes = (IsAuthenticated, )
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     lookup_url_kwarg = "group"
