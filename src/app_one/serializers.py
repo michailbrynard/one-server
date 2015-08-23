@@ -1,8 +1,10 @@
+from base64 import b64decode
+from logging import getLogger
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany
 from administration.models import UserBasic
-
+from django.core.files.base import ContentFile
 
 # Hyperlink Api
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -43,28 +45,31 @@ class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
         model = ImageMany
         fields = ('image', 'user', 'groups')
 
+logger = getLogger('django')
+
 
 class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
     # group_image = GroupImageHyperSerializer()
 
-    # def create(self, validated_data):
-    #     user = validated_data.pop('user')
-    #     for attr, value in validated_data.items():
-    #         setattr(instance, attr, value)
-    #     instance.save()
-    #
-    #     user_instance = instance.user
-    #     for attr, value in user.items():
-    #         if not ((attr == 'username') and (user_instance.username == value)):
-    #             setattr(user_instance, attr, value)
-    #
-    #     user_instance.save()
-    #
-    #     return instance
+    def create(self, validated_data):
+        logger.info(validated_data)
+        # if model_field.get_internal_type() == "ImageField" or model_field.get_internal_type() == "FileField":  # Convert files from base64 back to a file.
+        #     if field_elt.text is not None:
+        #         image_data = b64decode(field_elt.text)
+        #         setattr(instance, model_field.name, ContentFile(image_data, 'myImage.png'))
+
+        instance = OneImage.objects.create(**validated_data)
+
+        groups = instance.user.usergroup_set.all()
+        for group in groups:
+            GroupImage.objects.create(image=instance, user_group=group)
+
+        return instance
 
     class Meta:
         model = OneImage
-        fields = ('image', 'user',)
+        fields = ('image',)
+
 
 class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 

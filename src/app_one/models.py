@@ -16,11 +16,11 @@ logger = getLogger('django')
 # MODELS
 # ---------------------------------------------------------------------------------------------------------------------#
 def get_one_images_path(instance, filename):
-    return os.path.join('one_images', str(instance.id), filename)
+    return os.path.join('one_images', filename)
 
 
 def get_group_icon_path(instance, filename):
-    return os.path.join('group_icon', str(instance.id), filename)
+    return os.path.join('group_icon', filename)
 
 
 class OneImage(models.Model):

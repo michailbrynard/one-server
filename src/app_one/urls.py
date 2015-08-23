@@ -21,7 +21,7 @@ router = routers.DefaultRouter()
 router.register(r'hyper/groups', views.OneGroupHyper)
 router.register(r'hyper/user_groups', views.UserGroupHyper)
 router.register(r'hyper/group_images', views.GroupImageHyper)
-router.register(r'images', views.OneImageHyper)
+router.register(r'image', views.OneImageHyper)
 router.register(r'image/many', views.ImageManyHyper)
 
 # router.register(r'hyper/image_upload', views.ImageUploadHyper)

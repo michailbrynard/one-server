@@ -17,3 +17,5 @@ reset_db:
     		python ./src/manage.py createsuperuser --email=admin@zapgo.co --username=admin; \
     		python ./src/manage.py loaddata initial_data.json; \
 
+reload_server:
+	ssh amazon_one "cd one-server; docker-compose restart;"
