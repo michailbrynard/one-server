@@ -16,20 +16,37 @@ logger = getLogger('django')
 # MODELS
 # ---------------------------------------------------------------------------------------------------------------------#
 def get_one_images_path(instance, filename):
-    return os.path.join('one_images', str(instance.id), filename)
+    return os.path.join('one_images', filename)
 
 
 def get_group_icon_path(instance, filename):
-    return os.path.join('group_icon', str(instance.id), filename)
+    return os.path.join('group_icon', filename)
 
 
 class OneImage(models.Model):
     # User id
     user = models.ForeignKey(UserBasic)
     # Image
-    image = models.FileField(upload_to=get_one_images_path, null=True, blank=True)
+    image = models.ImageField(upload_to=get_one_images_path, null=True, blank=True)
     # Description
     description = models.CharField(max_length=200, null=True, blank=True)
+
+    # groups = models.ManyToManyField('OneGroup')
+
+
+class ImageMany(models.Model):
+    # User id
+    user = models.ForeignKey(UserBasic)
+    # Image
+    image = models.ImageField(upload_to=get_one_images_path, null=True, blank=True)
+    # Description
+    description = models.CharField(max_length=200, null=True, blank=True)
+
+    groups = models.ManyToManyField('OneGroup')
+
+    # Timestamp
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+    updated_timestamp = models.DateTimeField(auto_now=True)
 
 
 class OneGroup(models.Model):
@@ -38,7 +55,7 @@ class OneGroup(models.Model):
     # Name
     group_name = models.CharField(max_length=200, null=True, blank=True)
     # Group icon
-    group_icon = models.FileField(upload_to=get_group_icon_path, null=True, blank=True)
+    group_icon = models.ImageField(upload_to=get_group_icon_path, null=True, blank=True)
 
     # Group status
     ACTIVE = 'A'
@@ -117,3 +134,6 @@ class GroupImage(models.Model):
         null=False,
         blank=False,
     )
+
+    class Meta:
+        ordering = ('-created_timestamp', )

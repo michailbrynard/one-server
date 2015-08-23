@@ -1,11 +1,22 @@
+from base64 import b64decode
+from logging import getLogger
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from app_one.models import OneImage, OneGroup, UserGroup, GroupImage
+from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany
 from administration.models import UserBasic
-
+from django.core.files.base import ContentFile
 
 # Hyperlink Api
 # ---------------------------------------------------------------------------------------------------------------------#
+
+# class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
+#     groups = GroupImageHyperSerializer(many=True)
+#
+#     class Meta:
+#         model = OneImage
+#         fields = ('image', 'user', 'groups')
+
+
 class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -24,7 +35,40 @@ class GroupImageHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GroupImage
-        fields = ('id', 'user_group', 'image', 'created_timestamp')
+        # fields = ('id', 'user_group', 'image', 'created_timestamp')
+
+
+class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
+    groups = OneGroupHyperSerializer(many=True)
+
+    class Meta:
+        model = ImageMany
+        fields = ('image', 'user', 'groups')
+
+logger = getLogger('django')
+
+
+class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
+    # group_image = GroupImageHyperSerializer()
+
+    def create(self, validated_data):
+        logger.info(validated_data)
+        # if model_field.get_internal_type() == "ImageField" or model_field.get_internal_type() == "FileField":  # Convert files from base64 back to a file.
+        #     if field_elt.text is not None:
+        #         image_data = b64decode(field_elt.text)
+        #         setattr(instance, model_field.name, ContentFile(image_data, 'myImage.png'))
+
+        instance = OneImage.objects.create(**validated_data)
+
+        groups = instance.user.usergroup_set.all()
+        for group in groups:
+            GroupImage.objects.create(image=instance, user_group=group)
+
+        return instance
+
+    class Meta:
+        model = OneImage
+        fields = ('image',)
 
 
 class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -36,11 +80,16 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
-class OneImageSerializer(serializers.ModelSerializer):
+class OneImageDisplaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneImage
-        fields = ('image',)
+        fields = ('image', )
+
+
+class OneImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OneImage
 
 
 class OneGroupSerializer(serializers.ModelSerializer):
@@ -158,5 +207,5 @@ class ListImageSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         image_obj = OneImage.objects.get(id=obj.image_id)
-        serialized_obj = OneImageSerializer(image_obj, context=self.context)
+        serialized_obj = OneImageDisplaySerializer(image_obj, context=self.context)
         return serialized_obj.data

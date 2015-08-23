@@ -21,6 +21,10 @@ router = routers.DefaultRouter()
 router.register(r'hyper/groups', views.OneGroupHyper)
 router.register(r'hyper/user_groups', views.UserGroupHyper)
 router.register(r'hyper/group_images', views.GroupImageHyper)
+router.register(r'image', views.OneImageHyper)
+router.register(r'image/many', views.ImageManyHyper)
+
+# router.register(r'hyper/image_upload', views.ImageUploadHyper)
 
 # URLS
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -38,4 +42,5 @@ urlpatterns = patterns('',
     # Images feed
     url(r'^images/$', views.ListImages.as_view()),
     url(r'^images/(?P<group>\d+)/$', views.ListImageGroups.as_view()),
+
 )
