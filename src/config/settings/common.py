@@ -214,21 +214,6 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
 
-# # Django S3 Storage
-# # ---------------------------------------------------------------------------------------------------------------------
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-#
-# # These are optional -- if they're set as environment variables they won't
-# # need to be set here as well
-# AWS_ACCESS_KEY_ID = 'AKIAI5ZDBSNR6LWGAPXA'
-# AWS_SECRET_ACCESS_KEY = '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'
-#
-# AWS_STORAGE_BUCKET_NAME = 'one-storages'
-
-# CONTENT_TYPES = ['image', 'video']
-# MAX_UPLOAD_SIZE = 5242880 #2.5MB
-
-
 # LOGGING
 # ---------------------------------------------------------------------------------------------------------------------
 # See https://docs.djangoproject.com/en/dev/topics/logging/
