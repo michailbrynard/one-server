@@ -1,0 +1,18 @@
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Subject: [example.com] Please Confirm Your E-mail Address
+From: webmaster@localhost
+To: test25@zapgo.co
+Date: Sat, 22 Aug 2015 10:16:42 -0000
+Message-ID: <20150822101642.8465.5225@rfc.private.address.invalid.query>
+
+Hello from example.com!
+
+You're receiving this e-mail because user test25@zapgo.co at example.com has given yours as an e-mail address to connect their account.
+
+To confirm this is correct, go to http://localhost:8888/api/account-confirm-email/ezfbzhdsja3fimv5fd5kwary9dlinbyctqqr5kuldufqkssuvxmyqqrssfqahpgp/
+
+Thank you from example.com!
+example.com
+-------------------------------------------------------------------------------
