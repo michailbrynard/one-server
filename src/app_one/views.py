@@ -58,7 +58,7 @@ class ListCreateGroups(generics.ListCreateAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListUserGroupSerializer
 
     def get_serializer_class(self, *args, **kwargs):
@@ -88,7 +88,7 @@ class ListCreateGroups(generics.ListCreateAPIView):
                         status=status.HTTP_201_CREATED, headers=headers)
 
 
-class ListGroupUsers(generics.ListCreateAPIView):
+class ListCreateGroupUsers(generics.ListCreateAPIView):
     """
     API endpoint that list the users in a group
 
@@ -100,7 +100,7 @@ class ListGroupUsers(generics.ListCreateAPIView):
     http://localhost:8000/api/app_one/groups/1/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     lookup_url_kwarg = "group"
 
     def get_serializer_class(self, *args, **kwargs):
@@ -115,8 +115,7 @@ class ListGroupUsers(generics.ListCreateAPIView):
         """
         group = self.kwargs.get(self.lookup_url_kwarg)
         if not OneGroup.objects.filter(id=group, creator=self.request.user).exists():
-             return Response({"status": "error", "message": "Permission denied, only creators can view a groups user list"},
-                            status=status.HTTP_403_FORBIDDEN)
+            return Response({"status": "error", "message": "Permission denied, only creators can view a groups user list."}, status=status.HTTP_403_FORBIDDEN)
 
         return UserGroup.objects.filter(group_id=group)
 
@@ -129,8 +128,7 @@ class ListGroupUsers(generics.ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         group = self.kwargs.get(self.lookup_url_kwarg)
         if not OneGroup.objects.filter(id=group, creator=self.request.user).exists():
-             return Response({"status": "error", "message": "Permission denied, only creators can add users to a group"},
-                            status=status.HTTP_403_FORBIDDEN)
+            return Response({"status": "error", "message": "Permission denied, only creators can add users to a group."}, status=status.HTTP_403_FORBIDDEN)
 
         try:
             user_obj = UserBasic.objects.get(email=request.data['email'])
@@ -160,7 +158,7 @@ class ListImages(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     def get_queryset(self):
@@ -179,7 +177,7 @@ class ListImageGroups(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     lookup_url_kwarg = "group"
