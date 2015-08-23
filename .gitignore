@@ -1,4 +1,6 @@
 var/www/static/*
+var/www/media/*
+
 *.pyc
 *.log
 .idea
