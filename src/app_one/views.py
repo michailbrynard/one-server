@@ -87,6 +87,7 @@ class OneImageHyper(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
 
         serializer.is_valid(raise_exception=True)
+
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
@@ -239,10 +240,11 @@ class ListImages(generics.ListAPIView):
         """
         user_obj = self.request.user
         group_id_list = [x['id'] for x in user_obj.onegroup_set.values('id')]
-        if not LOCAL:
-            return GroupImage.objects.filter(user_group_id__in=group_id_list).distinct("id")
-        else:
-            return GroupImage.objects.filter(user_group_id__in=group_id_list)
+
+        group_image_ids = set(
+            GroupImage.objects.filter(user_group_id__in=group_id_list).values_list('image_id', flat=True))
+
+        return GroupImage.objects.filter(image_id__in=group_image_ids)
 
 
 class ListImageGroups(generics.ListAPIView):
