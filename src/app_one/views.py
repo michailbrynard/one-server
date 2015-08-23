@@ -114,21 +114,29 @@ class ListGroupUsers(generics.ListCreateAPIView):
         for the currently authenticated user.
         """
         group = self.kwargs.get(self.lookup_url_kwarg)
+        if not OneGroup.objects.filter(id=group, creator=self.request.user).exists():
+             return Response({"status": "error", "message": "Permission denied, only creators can view a groups user list"},
+                            status=status.HTTP_403_FORBIDDEN)
+
         return UserGroup.objects.filter(group_id=group)
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    def perform_create(self, serializer, user_obj):
+        serializer.save(user=user_obj)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         group = self.kwargs.get(self.lookup_url_kwarg)
+        if not OneGroup.objects.filter(id=group, creator=self.request.user).exists():
+             return Response({"status": "error", "message": "Permission denied, only creators can add users to a group"},
+                            status=status.HTTP_403_FORBIDDEN)
+
         try:
             user_obj = UserBasic.objects.get(email=request.data['email'])
         except ObjectDoesNotExist:
             return Response({"status": "error", "message": "User does not exist."},
-                            status=status.HTTP_403_FORBIDDEN)            
+                            status=status.HTTP_200_OK)
 
         if not UserGroup.objects.filter(group_id=group, user=user_obj).exists():
             data = {'user': user_obj.id,
@@ -136,13 +144,13 @@ class ListGroupUsers(generics.ListCreateAPIView):
                 }
             serializer = self.get_serializer(data=data)
             serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer)
+            self.perform_create(serializer, user_obj)
             headers = self.get_success_headers(serializer.data)
             return Response({"status": "success", "results":serializer.data},
                             status=status.HTTP_201_CREATED, headers=headers)
         else:
             return Response({"status": "error", "message": "User is already subscribed."},
-                            status=status.HTTP_403_FORBIDDEN)        
+                            status=status.HTTP_200_OK)        
 
 
 class ListImages(generics.ListAPIView):
