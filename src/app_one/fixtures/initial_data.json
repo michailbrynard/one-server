@@ -150,16 +150,6 @@
     }
   },
   {
-    "model": "app_one.usergroup",
-    "pk": 6,
-    "fields": {
-      "user": 4,
-      "group": 1,
-      "created_timestamp": "2015-08-1 11:09",
-      "updated_timestamp": "2015-08-1 11:09"  
-    }
-  },
-  {
     "model": "app_one.groupimage",
     "pk": 1,
     "fields": {
@@ -183,7 +173,7 @@
     "model": "app_one.groupimage",
     "pk": 3,
     "fields": {
-      "user_group": 2,
+      "user_group": 1,
       "image": 1,
       "created_timestamp": "2015-08-1 11:06",
       "updated_timestamp": "2015-08-1 11:06"  
@@ -193,7 +183,7 @@
     "model": "app_one.groupimage",
     "pk": 4,
     "fields": {
-      "user_group": 3,
+      "user_group": 4,
       "image": 2,
       "created_timestamp": "2015-08-1 11:07",
       "updated_timestamp": "2015-08-1 11:07"  
@@ -203,7 +193,7 @@
     "model": "app_one.groupimage",
     "pk": 5,
     "fields": {
-      "user_group": 4,
+      "user_group": 5,
       "image": 2,
       "created_timestamp": "2015-08-1 11:08",
       "updated_timestamp": "2015-08-1 11:08"  

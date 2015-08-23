@@ -196,7 +196,7 @@ class ListImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'user_group', 'image', 'created_timestamp')
 
     def get_user_group(self, obj):
-        user_group_obj = UserGroup.objects.get(group_id=obj.id)
+        user_group_obj = UserGroup.objects.get(id=obj.user_group_id)
         serialized_obj = SubUserGroupSerializer(user_group_obj, context=self.context)
         return serialized_obj.data
 

@@ -1,10 +1,8 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from app_one.models import OneGroup, UserGroup, GroupImage, OneImage, ImageMany
