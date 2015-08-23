@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from app_one.models import OneGroup, UserGroup, GroupImage
+from app_one.models import OneImage, OneGroup, UserGroup, GroupImage
 from administration.models import UserBasic
 
 
@@ -36,11 +36,25 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
+class OneImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OneImage
+        fields = ('image',)
+
+
 class OneGroupSerializer(serializers.ModelSerializer):
+
+    creator = serializers.SerializerMethodField(source='get_creator')
 
     class Meta:
         model = OneGroup
         fields = ('id', 'creator', 'group_name', 'group_icon', 'status', 'created_timestamp')
+
+    def get_creator(self, obj):
+        creator_obj = UserBasic.objects.get(id=obj.creator_id)
+        serialized_obj = UserSerializer(creator_obj, context=self.context)
+        return serialized_obj.data
 
 
 class UserGroupSerializer(serializers.ModelSerializer):
@@ -94,22 +108,6 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
             return None
 
 
-# Custom Group Users serializers
-# ---------------------------------------------------------------------------------------------------------------------#
-class ListGroupUsersSerializer(serializers.ModelSerializer):
-
-    user = serializers.SerializerMethodField(source='get_user')
-
-    class Meta:
-        model = UserGroup
-        fields = ('user', 'created_timestamp', 'updated_timestamp')
-
-    def get_user(self, obj):
-        user_obj = UserBasic.objects.get(id=obj.user_id)
-        serialized_obj = UserSerializer(user_obj, context=self.context)
-        return serialized_obj.data
-
-
 class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -117,9 +115,30 @@ class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
         fields = ('user', 'group', 'created_timestamp', 'updated_timestamp')
 
 
+class SubUserGroupSerializer(serializers.ModelSerializer):
+
+    user = serializers.SerializerMethodField(source='get_user')
+    group = serializers.SerializerMethodField(source='get_group')
+
+    class Meta:
+        model = UserGroup
+        fields = ('id', 'user', 'group', 'status', 'created_timestamp')
+
+    def get_user(self, obj):
+        user_obj = UserBasic.objects.get(id=obj.user_id)
+        serialized_obj = UserSerializer(user_obj, context=self.context)
+        return serialized_obj.data
+
+    def get_group(self, obj):
+        group_obj = OneGroup.objects.get(id=obj.group_id)
+        serialized_obj = OneGroupSerializer(group_obj, context=self.context)
+        return serialized_obj.data
+
+
 class ListImageSerializer(serializers.ModelSerializer):
 
     user_group = serializers.SerializerMethodField(source='get_user_group')
+    image = serializers.SerializerMethodField(source='get_image')
 
     class Meta:
         model = GroupImage
@@ -127,5 +146,10 @@ class ListImageSerializer(serializers.ModelSerializer):
 
     def get_user_group(self, obj):
         user_group_obj = UserGroup.objects.get(group_id=obj.id)
-        serialized_obj = UserGroupSerializer(user_group_obj, context=self.context)
+        serialized_obj = SubUserGroupSerializer(user_group_obj, context=self.context)
+        return serialized_obj.data
+
+    def get_image(self, obj):
+        image_obj = OneImage.objects.get(id=obj.image_id)
+        serialized_obj = OneImageSerializer(image_obj, context=self.context)
         return serialized_obj.data
