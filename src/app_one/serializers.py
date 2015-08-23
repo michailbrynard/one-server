@@ -108,6 +108,13 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
             return None
 
 
+class CreateGroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OneGroup
+        fields = ('creator', 'group_name')
+
+
 class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
 
     class Meta:

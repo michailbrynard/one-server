@@ -7,7 +7,8 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from app_one.models import OneGroup, UserGroup, GroupImage
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
-    UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListImageSerializer
+    UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListImageSerializer, \
+    CreateGroupSerializer
 
 from administration.models import UserBasic
 
@@ -50,15 +51,20 @@ class UserHyper(viewsets.ModelViewSet):
 
 # Custom Views
 # ---------------------------------------------------------------------------------------------------------------------#
-class ListCreateGroups(generics.ListAPIView):
+class ListCreateGroups(generics.ListCreateAPIView):
     """
     API endpoint that list the user's questions, and allows an user to create a question.
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListUserGroupSerializer
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.method == 'POST':
+            return CreateGroupSerializer
+        return ListUserGroupSerializer
 
     def get_queryset(self):
         """
@@ -66,6 +72,20 @@ class ListCreateGroups(generics.ListAPIView):
         for the currently authenticated user.
         """
         return UserGroup.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response({"status": "success", "results": serializer.data},
+                        status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ListGroupUsers(generics.ListCreateAPIView):
@@ -80,7 +100,7 @@ class ListGroupUsers(generics.ListCreateAPIView):
     http://localhost:8000/api/app_one/groups/1/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     lookup_url_kwarg = "group"
 
     def get_serializer_class(self, *args, **kwargs):
@@ -132,7 +152,7 @@ class ListImages(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     def get_queryset(self):
@@ -151,7 +171,7 @@ class ListImageGroups(generics.ListAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
     permission_classes = (IsAuthenticated, )
-    authentication_classes = (JSONWebTokenAuthentication, )
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     lookup_url_kwarg = "group"

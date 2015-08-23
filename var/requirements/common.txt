@@ -21,6 +21,7 @@ django-cities-light==3.1.2
 django-cors-headers==1.1.0
 django-rest-auth==0.4.0
 django-rest-swagger==0.3.3
+django-storages==1.1.8
 djangorestframework==3.2.2
 djangorestframework-jwt==1.6.0
 
