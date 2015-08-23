@@ -18,7 +18,7 @@ tmp/*
 
 # FILES
 django.db
-workspace.xml
+.idea
 .DS_Store
 
 # FOLDERS
