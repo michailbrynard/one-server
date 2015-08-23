@@ -239,7 +239,10 @@ class ListImages(generics.ListAPIView):
         """
         user_obj = self.request.user
         group_id_list = [x['id'] for x in user_obj.onegroup_set.values('id')]
-        return GroupImage.objects.filter(user_group_id__in=group_id_list)
+        if not LOCAL:
+            return GroupImage.objects.filter(user_group_id__in=group_id_list).distinct("id")
+        else:
+            return GroupImage.objects.filter(user_group_id__in=group_id_list)
 
 
 class ListImageGroups(generics.ListAPIView):

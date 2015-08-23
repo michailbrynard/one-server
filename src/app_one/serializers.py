@@ -159,6 +159,16 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
 
 class CreateGroupSerializer(serializers.ModelSerializer):
 
+    def create(self, validated_data):
+
+        instance = OneGroup.objects.create(**validated_data)
+
+        owner = instance.creator
+
+        UserGroup.objects.create(user=owner, group=instance)
+
+        return instance
+
     class Meta:
         model = OneGroup
         fields = ('creator', 'group_name')
