@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "user": 3,
-      "image": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c0.0.200.200/p200x200/1011632_10203495998983926_268557934225174485_n.jpg?oh=3f420f56d765c891740ad373b7b010a7&oe=5677B6DC&__gda__=1450734644_ad34571bf8e2e35171aea79ff3561095",
+      "image": "one_images/1/one.jpg",
       "description": "Image1"
     }
   },
@@ -13,7 +13,7 @@
     "pk": 2,
     "fields": {
       "user": 3,
-      "image": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c0.0.200.200/p200x200/1011632_10203495998983926_268557934225174485_n.jpg?oh=3f420f56d765c891740ad373b7b010a7&oe=5677B6DC&__gda__=1450734644_ad34571bf8e2e35171aea79ff3561095",
+      "image": "one_images/2/one.jpg",
       "description": "Image2"
     }
   },
@@ -22,7 +22,7 @@
     "pk": 3,
     "fields": {
       "user": 3,
-      "image": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c0.0.200.200/p200x200/1011632_10203495998983926_268557934225174485_n.jpg?oh=3f420f56d765c891740ad373b7b010a7&oe=5677B6DC&__gda__=1450734644_ad34571bf8e2e35171aea79ff3561095",
+      "image": "one_images/3/one.jpg",
       "description": "Image3"
     }
   },
@@ -31,7 +31,7 @@
     "pk": 4,
     "fields": {
       "user": 3,
-      "image": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c0.0.200.200/p200x200/1011632_10203495998983926_268557934225174485_n.jpg?oh=3f420f56d765c891740ad373b7b010a7&oe=5677B6DC&__gda__=1450734644_ad34571bf8e2e35171aea79ff3561095",
+      "image": "one_images/4/one.jpg",
       "description": "Image4"
     }
   },
@@ -40,7 +40,7 @@
     "pk": 5,
     "fields": {
       "user": 3,
-      "image": "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/c0.0.200.200/p200x200/1011632_10203495998983926_268557934225174485_n.jpg?oh=3f420f56d765c891740ad373b7b010a7&oe=5677B6DC&__gda__=1450734644_ad34571bf8e2e35171aea79ff3561095",
+      "image": "one_images/5/one.jpg",
       "description": "Image5"
     }
   },

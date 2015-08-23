@@ -1,11 +1,20 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from app_one.models import OneImage, OneGroup, UserGroup, GroupImage
+from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany
 from administration.models import UserBasic
 
 
 # Hyperlink Api
 # ---------------------------------------------------------------------------------------------------------------------#
+
+# class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
+#     groups = GroupImageHyperSerializer(many=True)
+#
+#     class Meta:
+#         model = OneImage
+#         fields = ('image', 'user', 'groups')
+
+
 class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -24,8 +33,38 @@ class GroupImageHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GroupImage
-        fields = ('id', 'user_group', 'image', 'created_timestamp')
+        # fields = ('id', 'user_group', 'image', 'created_timestamp')
 
+
+class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
+    groups = OneGroupHyperSerializer(many=True)
+
+    class Meta:
+        model = ImageMany
+        fields = ('image', 'user', 'groups')
+
+
+class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
+    # group_image = GroupImageHyperSerializer()
+
+    # def create(self, validated_data):
+    #     user = validated_data.pop('user')
+    #     for attr, value in validated_data.items():
+    #         setattr(instance, attr, value)
+    #     instance.save()
+    #
+    #     user_instance = instance.user
+    #     for attr, value in user.items():
+    #         if not ((attr == 'username') and (user_instance.username == value)):
+    #             setattr(user_instance, attr, value)
+    #
+    #     user_instance.save()
+    #
+    #     return instance
+
+    class Meta:
+        model = OneImage
+        fields = ('image', 'user',)
 
 class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -36,11 +75,16 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
-class OneImageSerializer(serializers.ModelSerializer):
+class OneImageDisplaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneImage
-        fields = ('image',)
+        fields = ('image', )
+
+
+class OneImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OneImage
 
 
 class OneGroupSerializer(serializers.ModelSerializer):
@@ -158,5 +202,5 @@ class ListImageSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         image_obj = OneImage.objects.get(id=obj.image_id)
-        serialized_obj = OneImageSerializer(image_obj, context=self.context)
+        serialized_obj = OneImageDisplaySerializer(image_obj, context=self.context)
         return serialized_obj.data
