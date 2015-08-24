@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import login, logout
+from django.views.decorators.csrf import csrf_exempt
 
 from administration.models import UserBasic, GroupBasic, CustomToken
 from administration.serializers import UserSerializer, GroupSerializer, CustomTokenSerializer, \
@@ -134,6 +135,7 @@ class Login(GenericAPIView):
     token_model = CustomToken
     response_serializer = CustomTokenSerializer
 
+    @csrf_exempt
     def login(self):
         self.user = self.serializer.validated_data['user']
         self.token, created = self.token_model.objects.update_or_create(
