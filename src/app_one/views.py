@@ -9,11 +9,11 @@ from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from app_one.models import OneGroup, UserGroup, GroupImage, OneImage, ImageMany
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
     UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListImageSerializer, \
-    CreateGroupSerializer, OneImageHyperSerializer, ImageManyHyperSerializer
+    ListAllImageSerializer, CreateGroupSerializer, OneImageHyperSerializer, ImageManyHyperSerializer
 
 from administration.models import UserBasic
 
-LOCAL = False
+LOCAL = True
 
 # Hyper Views
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -232,7 +232,7 @@ class ListImages(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     if not LOCAL:
         authentication_classes = (JSONWebTokenAuthentication,)
-    serializer_class = ListImageSerializer
+    serializer_class = ListAllImageSerializer
 
     def get_queryset(self):
         """
@@ -244,7 +244,7 @@ class ListImages(generics.ListAPIView):
         group_image_ids = set(
             GroupImage.objects.filter(user_group_id__in=group_id_list).values_list('image_id', flat=True))
 
-        return GroupImage.objects.filter(image_id__in=group_image_ids)
+        return OneImage.objects.filter(id__in=group_image_ids)
 
 
 class ListImageGroups(generics.ListAPIView):

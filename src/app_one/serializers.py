@@ -171,7 +171,7 @@ class CreateGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneGroup
-        fields = ('creator', 'group_name')
+        fields = ('group_name',)
 
 
 class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
@@ -201,6 +201,26 @@ class SubUserGroupSerializer(serializers.ModelSerializer):
         return serialized_obj.data
 
 
+class ListAllImageSerializer(serializers.ModelSerializer):
+
+    user_group = serializers.SerializerMethodField(source='get_user_group')
+    image = serializers.SerializerMethodField(source='get_image')
+
+    class Meta:
+        model = GroupImage
+        fields = ('id', 'user_group', 'image', 'created_timestamp')
+
+    def get_user_group(self, obj):
+        user_group_obj = UserGroup.objects.get(id=obj.user_id)
+        serialized_obj = SubUserGroupSerializer(user_group_obj, context=self.context)
+        return serialized_obj.data
+
+    def get_image(self, obj):
+        image_obj = OneImage.objects.get(id=obj.id)
+        serialized_obj = OneImageDisplaySerializer(image_obj, context=self.context)
+        return serialized_obj.data
+
+
 class ListImageSerializer(serializers.ModelSerializer):
 
     user_group = serializers.SerializerMethodField(source='get_user_group')
@@ -219,3 +239,4 @@ class ListImageSerializer(serializers.ModelSerializer):
         image_obj = OneImage.objects.get(id=obj.image_id)
         serialized_obj = OneImageDisplaySerializer(image_obj, context=self.context)
         return serialized_obj.data
+
