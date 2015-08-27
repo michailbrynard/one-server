@@ -1,11 +1,26 @@
+from app_one.models import *
 from django.contrib import admin
 
-# Register your models here.
-from app_one.models import *
+
+class OneImageAdmin(admin.ModelAdmin):
+    list_display = ('user', 'image', 'description')
 
 
-admin.site.register(OneImage)
-admin.site.register(OneGroup)
-admin.site.register(UserGroup)
-admin.site.register(GroupImage)
+class OneGroupAdmin(admin.ModelAdmin):
+    list_display = ('creator', 'group_name', 'group_icon', 'status',
+                    'created_timestamp', 'updated_timestamp')
+
+
+class UserGroupAdmin(admin.ModelAdmin):
+    list_display = ('user', 'group', 'status', 'created_timestamp', 'updated_timestamp')
+
+
+class GroupImageAdmin(admin.ModelAdmin):
+    list_display = ('user_group', 'image', 'status', 'created_timestamp', 'updated_timestamp')
+
+
+admin.site.register(OneImage, OneImageAdmin)
+admin.site.register(OneGroup, OneGroupAdmin)
+admin.site.register(UserGroup, UserGroupAdmin)
+admin.site.register(GroupImage, GroupImageAdmin)
 

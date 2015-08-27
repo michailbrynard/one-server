@@ -108,6 +108,9 @@ class UserGroup(models.Model):
         blank=False,
     )
 
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.user.email
+
 
 class GroupImage(models.Model):
     # Group id
@@ -137,3 +140,6 @@ class GroupImage(models.Model):
 
     class Meta:
         ordering = ('-created_timestamp', )
+
+    def __str__(self):  # Python 3: def __str__(self):
+        return self.user_group.one_group
