@@ -178,8 +178,8 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'app/config/templates')]
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.permissions.IsAuthenticated',
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -193,8 +193,12 @@ REST_FRAMEWORK = {
 # JWT Token
 # ---------------------------------------------------------------------------------------------------------------------
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=6000),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=31104000),
+    # 'JWT_VERIFY_EXPIRATION': False,
 }
+
+SESSION_COOKIE_AGE = 1209600*5
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 
 # Override
@@ -264,7 +268,7 @@ LOGGING = {
             'level': 'INFO',
         },
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['mail_admins', 'console'],
             'level': 'ERROR',
             'propagate': False,
         },

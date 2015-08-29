@@ -2,7 +2,9 @@ import base64
 from logging import getLogger
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
 from rest_framework import viewsets, generics
+from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -25,6 +27,7 @@ class OneGroupHyper(viewsets.ModelViewSet):
     """
     queryset = OneGroup.objects.all()
     serializer_class = OneGroupHyperSerializer
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
 
 class UserGroupHyper(viewsets.ModelViewSet):
@@ -33,6 +36,7 @@ class UserGroupHyper(viewsets.ModelViewSet):
     """
     queryset = UserGroup.objects.filter()
     serializer_class = UserGroupHyperSerializer
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
 
 class GroupImageHyper(viewsets.ModelViewSet):
@@ -41,10 +45,8 @@ class GroupImageHyper(viewsets.ModelViewSet):
     """
     queryset = GroupImage.objects.all()
     serializer_class = GroupImageHyperSerializer
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication,)
-
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    # permission_classes = (IsAuthenticated,)
 
 
 class UserHyper(viewsets.ModelViewSet):
@@ -62,9 +64,8 @@ class ImageManyHyper(viewsets.ModelViewSet):
     """
     queryset = ImageMany.objects.all()
     serializer_class = ImageManyHyperSerializer
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    # permission_classes = (IsAuthenticated,)
 
 
 logger = getLogger('django')
@@ -75,9 +76,8 @@ class OneImageHyper(viewsets.ModelViewSet):
     """
     queryset = OneImage.objects.all()
     serializer_class = OneImageHyperSerializer
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication,)
-    permission_classes = (IsAuthenticated, )
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    # permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -88,11 +88,15 @@ class OneImageHyper(viewsets.ModelViewSet):
 
         data = request.data.copy()
 
-        if isinstance(data.get('image'), list):
+        logger.info('received copy of data!!')
+
+        if isinstance(data.get('image'), str):
+            logger.info('Base64 from ios:')
             imgstring = data.pop('image')[0]
+            logger.info(imgstring)
             img = ContentFile(base64.b64decode(imgstring), name='image.jpg')
+            # img = InMemoryUploadedFile(img, None, 'image.jpg', 'image/jpeg', len(img), None)
             data.update({'image': img})
-            logger.info(data)
         else:
             logger.info('In memory file')
 
@@ -132,9 +136,8 @@ class ListCreateGroups(generics.ListCreateAPIView):
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
-    permission_classes = (IsAuthenticated,)
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = ListUserGroupSerializer
 
     def get_serializer_class(self, *args, **kwargs):
@@ -175,9 +178,8 @@ class ListCreateGroupUsers(generics.ListCreateAPIView):
     -d '{"email": "email"}'
     http://localhost:8000/api/app_one/groups/1/
     """
-    permission_classes = (IsAuthenticated,)
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication,)
     lookup_url_kwarg = "group"
 
     def get_serializer_class(self, *args, **kwargs):
@@ -242,9 +244,8 @@ class ListImages(generics.ListAPIView):
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
     """
-    permission_classes = (IsAuthenticated,)
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication,)
+    # permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication,)
     serializer_class = ListAllImageSerializer
 
     def get_queryset(self):
@@ -266,9 +267,8 @@ class ListImageGroups(generics.ListAPIView):
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
-    permission_classes = (IsAuthenticated,)
-    if not LOCAL:
-        authentication_classes = (JSONWebTokenAuthentication, )
+    # permission_classes = (IsAuthenticated,)
+    # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
 
     lookup_url_kwarg = "group"
