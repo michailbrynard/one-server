@@ -1,5 +1,7 @@
+import base64
 from logging import getLogger
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.files.base import ContentFile
 from rest_framework import viewsets, generics
 from rest_framework.response import Response
 from rest_framework import status
@@ -84,14 +86,25 @@ class OneImageHyper(viewsets.ModelViewSet):
         logger.info(request.data)
         # logger.info(request.files)
 
-        serializer = self.get_serializer(data=request.data)
+        data = request.data.copy()
+
+        if isinstance(data.get('image'), list):
+            imgstring = data.pop('image')[0]
+            img = ContentFile(base64.b64decode(imgstring), name='image.jpg')
+            data.update({'image': img})
+            logger.info(data)
+        else:
+            logger.info('In memory file')
+
+        serializer = self.get_serializer(data=data)
 
         serializer.is_valid(raise_exception=True)
+        logger.info('Data is valid!')
+        logger.info(serializer)
 
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
 
     # def create(self, request, *args, **kwargs):
     #     serializer = self.get_serializer(data=request.data)
