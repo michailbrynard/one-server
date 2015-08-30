@@ -254,7 +254,7 @@ class ListImages(generics.ListAPIView):
         This view should return a list of all the Images related to groups.
         """
         user_obj = self.request.user
-        group_id_list = [x['id'] for x in user_obj.onegroup_set.values('id')]
+        group_id_list = [x['id'] for x in user_obj.usergroup_set.values('id')]
 
         group_image_ids = set(
             GroupImage.objects.filter(user_group_id__in=group_id_list).values_list('image_id', flat=True))

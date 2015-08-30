@@ -62,7 +62,9 @@ class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
 
         groups = instance.user.usergroup_set.all()
         for group in groups:
-            GroupImage.objects.create(image=instance, user_group=group)
+            user_group = UserGroup.objects.filter(group_id=group.group_id)
+            for u in user_group:
+                GroupImage.objects.create(image=instance, user_group=u)
 
         return instance
 
