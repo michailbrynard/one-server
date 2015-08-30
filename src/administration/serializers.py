@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model, authenticate
 from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm
+from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 
@@ -28,7 +29,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = GroupBasic
+        model = Group
         fields = ('url', 'name')
 
 

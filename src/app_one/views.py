@@ -17,7 +17,7 @@ from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerialize
 
 from administration.models import UserBasic
 
-LOCAL = True
+LOCAL = False
 
 # Hyper Views
 # ---------------------------------------------------------------------------------------------------------------------#

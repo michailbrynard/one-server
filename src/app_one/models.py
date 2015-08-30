@@ -34,21 +34,6 @@ class OneImage(models.Model):
     # groups = models.ManyToManyField('OneGroup')
 
 
-class ImageMany(models.Model):
-    # User id
-    user = models.ForeignKey(UserBasic)
-    # Image
-    image = models.ImageField(upload_to=get_one_images_path, null=True, blank=True)
-    # Description
-    description = models.CharField(max_length=200, null=True, blank=True)
-
-    groups = models.ManyToManyField('OneGroup')
-
-    # Timestamp
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-    updated_timestamp = models.DateTimeField(auto_now=True)
-
-
 class OneGroup(models.Model):
     # Creator id
     creator = models.ForeignKey(UserBasic, verbose_name='Creator')
@@ -80,6 +65,21 @@ class OneGroup(models.Model):
 
     def __str__(self):  # Python 3: def __str__(self):
         return self.group_name
+
+
+class ImageMany(models.Model):
+    # User id
+    user = models.ForeignKey(UserBasic)
+    # Image
+    image = models.ImageField(upload_to=get_one_images_path, null=True, blank=True)
+    # Description
+    description = models.CharField(max_length=200, null=True, blank=True)
+
+    groups = models.ManyToManyField('OneGroup')
+
+    # Timestamp
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+    updated_timestamp = models.DateTimeField(auto_now=True)
 
 
 class UserGroup(models.Model):
@@ -142,4 +142,4 @@ class GroupImage(models.Model):
         ordering = ('-created_timestamp', )
 
     def __str__(self):  # Python 3: def __str__(self):
-        return self.user_group.one_group
+        return self.user_group
