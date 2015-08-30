@@ -68,7 +68,6 @@ EXTENSIONS = (
     'grappelli',
     'import_export',
     'reversion',
-    'guardian',
 
     'rest_framework_swagger',
 

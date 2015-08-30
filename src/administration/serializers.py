@@ -1,5 +1,3 @@
-from django.contrib.auth.models import Group
-
 from django.contrib.auth import get_user_model, authenticate
 from django.conf import settings
 from django.contrib.auth.forms import SetPasswordForm
@@ -17,7 +15,7 @@ from rest_framework import serializers, exceptions
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 
-from administration.models import UserBasic, CustomToken
+from administration.models import UserBasic, CustomToken, GroupBasic
 from administration.forms import PasswordResetForm
 
 
@@ -30,7 +28,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Group
+        model = GroupBasic
         fields = ('url', 'name')
 
 

@@ -58,6 +58,7 @@ class GroupBasic(models.Model):
     def natural_key(self):
         return (self.name,)
 
+
 class PermissionsMixin(models.Model):
     """
     A mixin class that adds the fields and methods necessary to support
