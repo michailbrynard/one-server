@@ -27,7 +27,7 @@ class OneGroupHyper(viewsets.ModelViewSet):
     """
     queryset = OneGroup.objects.all()
     serializer_class = OneGroupHyperSerializer
-    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
 
 class UserGroupHyper(viewsets.ModelViewSet):
@@ -36,7 +36,7 @@ class UserGroupHyper(viewsets.ModelViewSet):
     """
     queryset = UserGroup.objects.filter()
     serializer_class = UserGroupHyperSerializer
-    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
 
 class GroupImageHyper(viewsets.ModelViewSet):
@@ -45,8 +45,8 @@ class GroupImageHyper(viewsets.ModelViewSet):
     """
     queryset = GroupImage.objects.all()
     serializer_class = GroupImageHyperSerializer
-    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
 
 
 class UserHyper(viewsets.ModelViewSet):
@@ -64,8 +64,8 @@ class ImageManyHyper(viewsets.ModelViewSet):
     """
     queryset = ImageMany.objects.all()
     serializer_class = ImageManyHyperSerializer
-    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    # permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
 
 
 logger = getLogger('django')
@@ -76,8 +76,8 @@ class OneImageHyper(viewsets.ModelViewSet):
     """
     queryset = OneImage.objects.all()
     serializer_class = OneImageHyperSerializer
-    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
-    # permission_classes = (IsAuthenticated, )
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated, )
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -136,8 +136,8 @@ class ListCreateGroups(generics.ListCreateAPIView):
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
-    # permission_classes = (IsAuthenticated,)
-    # authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     serializer_class = ListUserGroupSerializer
 
     def get_serializer_class(self, *args, **kwargs):
@@ -178,8 +178,8 @@ class ListCreateGroupUsers(generics.ListCreateAPIView):
     -d '{"email": "email"}'
     http://localhost:8000/api/app_one/groups/1/
     """
-    # permission_classes = (IsAuthenticated,)
-    # authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     lookup_url_kwarg = "group"
 
     def get_serializer_class(self, *args, **kwargs):
@@ -244,8 +244,8 @@ class ListImages(generics.ListAPIView):
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
     """
-    # permission_classes = (IsAuthenticated,)
-    # authentication_classes = (JSONWebTokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
     serializer_class = ListAllImageSerializer
     paginate_by = 10
 
@@ -268,8 +268,8 @@ class ListImageGroups(generics.ListAPIView):
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
-    # permission_classes = (IsAuthenticated,)
-    # authentication_classes = (JSONWebTokenAuthentication, )
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
     paginate_by = 10
     lookup_url_kwarg = "group"
