@@ -17,7 +17,7 @@ from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerialize
 
 from administration.models import UserBasic
 
-LOCAL = False
+LOCAL = True
 
 # Hyper Views
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -247,6 +247,7 @@ class ListImages(generics.ListAPIView):
     # permission_classes = (IsAuthenticated,)
     # authentication_classes = (JSONWebTokenAuthentication,)
     serializer_class = ListAllImageSerializer
+    paginate_by = 10
 
     def get_queryset(self):
         """
@@ -270,7 +271,7 @@ class ListImageGroups(generics.ListAPIView):
     # permission_classes = (IsAuthenticated,)
     # authentication_classes = (JSONWebTokenAuthentication, )
     serializer_class = ListImageSerializer
-
+    paginate_by = 10
     lookup_url_kwarg = "group"
 
     def get_queryset(self):
