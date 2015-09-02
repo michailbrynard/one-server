@@ -259,7 +259,7 @@ class ListImages(generics.ListAPIView):
         group_image_ids = set(
             GroupImage.objects.filter(user_group_id__in=group_id_list).values_list('image_id', flat=True))
 
-        return OneImage.objects.filter(id__in=group_image_ids).order_by('-id')
+        return OneImage.objects.filter(id__in=group_image_ids, user=user_obj).order_by('-id')
 
 
 class ListImageGroups(generics.ListAPIView):
