@@ -223,9 +223,8 @@ class ListCreateGroupUsers(generics.ListCreateAPIView):
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token"
     http://localhost:8888/api/groups/1/
 
-    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token"
-    -d '{"email": "email"}'
-    http://localhost:8888/api/groups/1/
+    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token" -d
+    '{"message": "Be a man. Stick to One."}' http://localhost:8888/api/snorties/
     """
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
@@ -382,7 +381,7 @@ class CheckOne(generics.ListAPIView):
 class CreateSnorties(generics.CreateAPIView):
     """
     API endpoint that list the user's groups.
-    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/snorties/
     """
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
