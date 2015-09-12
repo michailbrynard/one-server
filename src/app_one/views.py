@@ -373,7 +373,6 @@ class CheckOne(generics.ListAPIView):
             last_image = None
             data = {"status": True, "message": "You are still okay."}
 
-        data = {"status": True, "message": "You are still okay."}
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
 
