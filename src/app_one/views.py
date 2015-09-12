@@ -399,5 +399,8 @@ class CreateSnorties(generics.CreateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        return Response({"status": "success", "results": serializer.data},
-                        status=status.HTTP_201_CREATED, headers=headers)
+        try:
+            return Response({"status": "success", "results": serializer.data},
+                            status=status.HTTP_201_CREATED, headers=headers)
+        except ObjectDoesNotExist:
+            return Response({"status": "error", "message": "User could not be deleted. Please try again soon."})
