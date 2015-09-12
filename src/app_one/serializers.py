@@ -6,6 +6,9 @@ from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany
 from administration.models import UserBasic
 from django.core.files.base import ContentFile
 
+logger = getLogger('django')
+
+
 # Hyperlink Api
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,8 +37,7 @@ class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ImageMany
         fields = ('image', 'user', 'groups')
-        logger = getLogger('django')
-
+        
 
 class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
     # group_image = GroupImageHyperSerializer()

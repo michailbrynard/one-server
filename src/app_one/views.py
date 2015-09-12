@@ -18,6 +18,8 @@ from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerialize
 from administration.models import UserBasic
 
 LOCAL = False
+logger = getLogger('django')
+
 
 # Hyper Views
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -67,8 +69,6 @@ class ImageManyHyper(viewsets.ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated,)
 
-
-logger = getLogger('django')
 
 class OneImageHyper(viewsets.ModelViewSet):
     """
