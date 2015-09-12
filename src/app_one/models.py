@@ -31,7 +31,9 @@ class OneImage(models.Model):
     # Description
     description = models.CharField(max_length=200, null=True, blank=True)
 
-    # groups = models.ManyToManyField('OneGroup')
+    # Timestamp
+    created_timestamp = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    updated_timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)    
 
 
 class OneGroup(models.Model):
