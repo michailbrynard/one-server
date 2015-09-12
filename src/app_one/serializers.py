@@ -215,6 +215,7 @@ class ListAllImageSerializer(serializers.ModelSerializer):
 class ListImageSerializer(serializers.ModelSerializer):
     user_group = serializers.SerializerMethodField(source='get_user_group')
     image = serializers.SerializerMethodField(source='get_image')
+    created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = GroupImage
