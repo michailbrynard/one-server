@@ -204,7 +204,7 @@ class ListDeleteGroupUsers(generics.ListAPIView):
             return Response({"status": "error", "message": "User does not exist."},
                             status=status.HTTP_200_OK)
 
-        if request.user.id == user_id:
+        if int(self.request.user.id) == int(user_id):
             return Response({"status": "error", "message": "Cannot delete yourself"},
                             status=status.HTTP_200_OK)
 
