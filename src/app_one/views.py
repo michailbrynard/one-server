@@ -168,17 +168,63 @@ class ListCreateGroups(generics.ListCreateAPIView):
         return Response({"status": "success", "results": serializer.data},
                         status=status.HTTP_201_CREATED, headers=headers)
 
+class ListDeleteGroupUsers(generics.ListAPIView):
+    """
+    API endpoint that deletes a user from a group
+
+    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6InRlc3QxQHphcGdvLmNvIiwiZXhwIjoxNDczMTkzNzk1LCJ1c2VybmFtZSI6InRlc3QxQHphcGdvLmNvIn0.6KjNreAQzPfpCwYhGHPGsybRCDoohxmLWHMPtT1b31o" -d http://localhost:8888/api/groups/2/delete/12/
+    """    
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    serializer_class = ListUserGroupSerializer
+
+    def get_queryset(self):
+        """
+        This view should return users in a group
+        """        
+        group_id = self.kwargs.get("group")
+        return UserGroup.objects.filter(group_id=group_id)
+
+    def post(self, request, *args, **kwargs):
+        return self.delete(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        group_id = self.kwargs.get("group")
+        user_id = self.kwargs.get("user")
+
+        if not OneGroup.objects.filter(id=group_id, creator=self.request.user).exists():
+            return Response(
+                {"status": "error", "message": "Permission denied, only creators can delete users from a group."},
+                status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            user_obj = UserBasic.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            return Response({"status": "error", "message": "User does not exist."},
+                            status=status.HTTP_200_OK)
+
+        if UserBasic.objects.filter(id=user_id).exists():
+            return Response({"status": "error", "message": "Cannot delete yourself"},
+                            status=status.HTTP_200_OK)
+
+        if UserGroup.objects.filter(group_id=group_id, user=user_obj).exists():
+            UserGroup.objects.filter(group_id=group_id, user=user_obj).delete()
+            return Response({"status": "success"}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "message": "User is not subscribed to the selected group."},
+                            status=status.HTTP_200_OK)
+
 
 class ListCreateGroupUsers(generics.ListCreateAPIView):
     """
     API endpoint that lists the users in a group
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token"
-    http://localhost:8888/api/app_one/groups/1/
+    http://localhost:8888/api/groups/1/
 
     curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token"
     -d '{"email": "email"}'
-    http://localhost:8888/api/app_one/groups/1/
+    http://localhost:8888/api/groups/1/
     """
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)

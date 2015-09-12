@@ -33,8 +33,8 @@ urlpatterns = patterns('',
     # Router fields - API
     url(r'^', include(router.urls)),
 
-                       # Check one per day photo
-                       url(r'^one/$', views.CheckOne.as_view()),
+    # Check one per day photo
+    url(r'^one/$', views.CheckOne.as_view()),
 
     # Group feed
     url(r'^groups/$', views.ListCreateGroups.as_view()),
@@ -42,8 +42,11 @@ urlpatterns = patterns('',
     # User feed
     url(r'^groups/(?P<group>\d+)/$', views.ListCreateGroupUsers.as_view()),
 
+    # Delete user from group
+    url(r'^groups/(?P<group>\d+)/delete/(?P<user>\d+)/$', views.ListDeleteGroupUsers.as_view()),    
+
     # Images feed
-                       url(r'^image/(?P<group_list>[0-9,]+)$', views.OneImageHyper.as_view()),
+    url(r'^image/(?P<group_list>[0-9,]+)$', views.OneImageHyper.as_view()),
     url(r'^images/$', views.ListImages.as_view()),
     url(r'^images/(?P<group>\d+)/$', views.ListImageGroups.as_view()),
 
