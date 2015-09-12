@@ -71,7 +71,8 @@ class ImageManyHyper(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
 
-class OneImageHyper(viewsets.ModelViewSet):
+# class OneImageHyper(viewsets.ModelViewSet):
+class OneImageHyper(generics.ListCreateAPIView):
     """
     API endpoint that allows images to be viewed or edited.
     """
@@ -79,6 +80,7 @@ class OneImageHyper(viewsets.ModelViewSet):
     serializer_class = OneImageHyperSerializer
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     permission_classes = (IsAuthenticated, )
+    lookup_url_kwarg = "group_list"
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
@@ -87,6 +89,7 @@ class OneImageHyper(viewsets.ModelViewSet):
         logger.info(request.data)
         # logger.info(request.files)
 
+        group_list = self.kwargs.get(self.lookup_url_kwarg)
         data = request.data.copy()
 
         logger.info('received copy of data!!')
@@ -319,6 +322,8 @@ class CheckOne(generics.ListAPIView):
             data = {"status": False, "message": snortie.message}
         else:
             data = {"status": True, "message": "You are still okay."}
+
+        data = {"status": True, "message": "You are still okay."}
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
 
