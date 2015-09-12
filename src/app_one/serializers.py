@@ -72,19 +72,16 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneImageDisplaySerializer(serializers.ModelSerializer):
+    created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = OneImage
         fields = ('image', 'description', 'created_timestamp')
 
 
-class OneImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OneImage
-
-
 class OneGroupSerializer(serializers.ModelSerializer):
     creator = serializers.SerializerMethodField(source='get_creator')
+    created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = OneGroup
