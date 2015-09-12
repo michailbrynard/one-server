@@ -168,11 +168,12 @@ class ListCreateGroups(generics.ListCreateAPIView):
         return Response({"status": "success", "results": serializer.data},
                         status=status.HTTP_201_CREATED, headers=headers)
 
+
 class ListDeleteGroupUsers(generics.ListAPIView):
     """
     API endpoint that deletes a user from a group
 
-    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6InRlc3QxQHphcGdvLmNvIiwiZXhwIjoxNDczMTkzNzk1LCJ1c2VybmFtZSI6InRlc3QxQHphcGdvLmNvIn0.6KjNreAQzPfpCwYhGHPGsybRCDoohxmLWHMPtT1b31o" -d http://localhost:8888/api/groups/2/delete/12/
+    curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token" -d http://localhost:8888/api/groups/2/delete/12/
     """    
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
@@ -203,7 +204,7 @@ class ListDeleteGroupUsers(generics.ListAPIView):
             return Response({"status": "error", "message": "User does not exist."},
                             status=status.HTTP_200_OK)
 
-        if UserBasic.objects.filter(id=user_id).exists():
+        if request.user.id == user_id:
             return Response({"status": "error", "message": "Cannot delete yourself"},
                             status=status.HTTP_200_OK)
 
