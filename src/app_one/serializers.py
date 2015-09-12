@@ -78,11 +78,17 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneImageDisplaySerializer(serializers.ModelSerializer):
+    user = serializers.SerializerMethodField(source='get_user')
     created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = OneImage
-        fields = ('image', 'description', 'created_timestamp')
+        fields = ('image', 'description', 'created_timestamp', 'user')
+
+    def get_user(self, obj):
+        user_obj = UserBasic.objects.get(id=obj.user_id)
+        serialized_obj = UserSerializer(user_obj, context=self.context)
+        return serialized_obj.data
 
 
 class OneGroupSerializer(serializers.ModelSerializer):
