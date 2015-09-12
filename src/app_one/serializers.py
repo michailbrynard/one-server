@@ -156,7 +156,7 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
     def get_last_upload(self, obj):
         try:
             latest = GroupImage.objects.filter(user_group=obj.id).latest('created_timestamp')
-            return latest.created_timestamp
+            return latest.created_timestamp.strftime('%d %b %Y')
         except ObjectDoesNotExist:
             return None
 
