@@ -14,7 +14,7 @@ from app_one.models import OneGroup, UserGroup, GroupImage, OneImage, ImageMany,
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
     UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListImageSerializer, \
     ListAllImageSerializer, CreateGroupSerializer, OneImageHyperSerializer, ImageManyHyperSerializer, \
-    SnortieLimiterSerializer
+    SnortieLimiterSerializer, CreateSnortieSerializer
 
 from administration.models import UserBasic
 
@@ -377,3 +377,27 @@ class CheckOne(generics.ListAPIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data)
+
+
+class CreateSnorties(generics.CreateAPIView):
+    """
+    API endpoint that list the user's groups.
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
+    """
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    serializer_class = CreateSnortieSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response({"status": "success", "results": serializer.data},
+                        status=status.HTTP_201_CREATED, headers=headers)

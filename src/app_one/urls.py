@@ -50,4 +50,7 @@ urlpatterns = patterns('',
     url(r'^images/$', views.ListImages.as_view()),
     url(r'^images/(?P<group>\d+)/$', views.ListImageGroups.as_view()),
 
+                       # Add snorties
+                       url(r'^snorties/$', views.CreateSnorties.as_view()),
+
 )

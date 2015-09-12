@@ -232,3 +232,12 @@ class ListImageSerializer(serializers.ModelSerializer):
         serialized_obj = OneImageDisplaySerializer(image_obj, context=self.context)
         return serialized_obj.data
 
+
+class CreateSnortieSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        instance = SnortieLimiter.objects.create(**validated_data)
+        return instance
+
+    class Meta:
+        model = SnortieLimiter
+        fields = ('message',)
