@@ -8,15 +8,6 @@ from django.core.files.base import ContentFile
 
 # Hyperlink Api
 # ---------------------------------------------------------------------------------------------------------------------#
-
-# class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
-#     groups = GroupImageHyperSerializer(many=True)
-#
-#     class Meta:
-#         model = OneImage
-#         fields = ('image', 'user', 'groups')
-
-
 class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
@@ -35,7 +26,6 @@ class GroupImageHyperSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = GroupImage
-        # fields = ('id', 'user_group', 'image', 'created_timestamp')
 
 
 class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -44,8 +34,7 @@ class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ImageMany
         fields = ('image', 'user', 'groups')
-
-logger = getLogger('django')
+        logger = getLogger('django')
 
 
 class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -86,7 +75,7 @@ class OneImageDisplaySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OneImage
-        fields = ('image', )
+        fields = ('image', 'description', 'created_timestamp')
 
 
 class OneImageSerializer(serializers.ModelSerializer):
@@ -95,7 +84,6 @@ class OneImageSerializer(serializers.ModelSerializer):
 
 
 class OneGroupSerializer(serializers.ModelSerializer):
-
     creator = serializers.SerializerMethodField(source='get_creator')
 
     class Meta:
@@ -136,7 +124,6 @@ class SnortieLimiterSerializer(serializers.Serializer):
 # Custom Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
 class ListUserGroupSerializer(serializers.ModelSerializer):
-
     user = serializers.SerializerMethodField(source='get_user')
     group = serializers.SerializerMethodField(source='get_group')
     last_upload = serializers.SerializerMethodField(source='get_last_upload')
@@ -166,13 +153,9 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
 class CreateGroupSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
-
         instance = OneGroup.objects.create(**validated_data)
-
         owner = instance.creator
-
         UserGroup.objects.create(user=owner, group=instance)
-
         return instance
 
     class Meta:
@@ -188,7 +171,6 @@ class SubscribeUserToGroupSerializer(serializers.ModelSerializer):
 
 
 class SubUserGroupSerializer(serializers.ModelSerializer):
-
     user = serializers.SerializerMethodField(source='get_user')
     group = serializers.SerializerMethodField(source='get_group')
 
@@ -208,17 +190,11 @@ class SubUserGroupSerializer(serializers.ModelSerializer):
 
 
 class ListAllImageSerializer(serializers.ModelSerializer):
-    # user_group = serializers.SerializerMethodField(source='get_user_group')
     image = serializers.SerializerMethodField(source='get_image')
 
     class Meta:
         model = GroupImage
-        fields = ('id', 'image', 'created_timestamp')
-
-    # def get_user_group(self, obj):
-    #     user_group_obj = UserGroup.objects.get(user_id=obj.user_id)
-    #     serialized_obj = SubUserGroupSerializer(user_group_obj, context=self.context)
-    #     return serialized_obj.data
+        fields = ('id', 'image')
 
     def get_image(self, obj):
         image_obj = OneImage.objects.get(id=obj.id)
@@ -227,7 +203,6 @@ class ListAllImageSerializer(serializers.ModelSerializer):
 
 
 class ListImageSerializer(serializers.ModelSerializer):
-
     user_group = serializers.SerializerMethodField(source='get_user_group')
     image = serializers.SerializerMethodField(source='get_image')
 
