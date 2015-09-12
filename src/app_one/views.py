@@ -23,7 +23,7 @@ LOCAL = False
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneGroupHyper(viewsets.ModelViewSet):
     """
-    API endpoint that allows cities to be viewed or edited.
+    API endpoint that allows groups to be viewed or edited.
     """
     queryset = OneGroup.objects.all()
     serializer_class = OneGroupHyperSerializer
@@ -32,7 +32,7 @@ class OneGroupHyper(viewsets.ModelViewSet):
 
 class UserGroupHyper(viewsets.ModelViewSet):
     """
-    API endpoint that allows countries to be viewed or edited.
+    API endpoint that allows user groups to be viewed or edited.
     """
     queryset = UserGroup.objects.filter()
     serializer_class = UserGroupHyperSerializer
@@ -41,7 +41,7 @@ class UserGroupHyper(viewsets.ModelViewSet):
 
 class GroupImageHyper(viewsets.ModelViewSet):
     """
-    API endpoint that allows categories to be viewed or edited.
+    API endpoint that allows group images to be viewed or edited.
     """
     queryset = GroupImage.objects.all()
     serializer_class = GroupImageHyperSerializer
@@ -51,7 +51,7 @@ class GroupImageHyper(viewsets.ModelViewSet):
 
 class UserHyper(viewsets.ModelViewSet):
     """
-    API endpoint that allows categories to be viewed or edited.
+    API endpoint that allows users to be viewed or edited.
     """
     queryset = UserBasic.objects.all()
 
@@ -60,7 +60,7 @@ class UserHyper(viewsets.ModelViewSet):
 
 class ImageManyHyper(viewsets.ModelViewSet):
     """
-    API endpoint that allows cities to be viewed or edited.
+    API endpoint that allows images to be viewed or edited.
     """
     queryset = ImageMany.objects.all()
     serializer_class = ImageManyHyperSerializer
@@ -72,7 +72,7 @@ logger = getLogger('django')
 
 class OneImageHyper(viewsets.ModelViewSet):
     """
-    API endpoint that allows cities to be viewed or edited.
+    API endpoint that allows images to be viewed or edited.
     """
     queryset = OneImage.objects.all()
     serializer_class = OneImageHyperSerializer
@@ -132,8 +132,7 @@ class OneImageHyper(viewsets.ModelViewSet):
 # ---------------------------------------------------------------------------------------------------------------------#
 class ListCreateGroups(generics.ListCreateAPIView):
     """
-    API endpoint that list the user's questions, and allows an user to create a question.
-
+    API endpoint that list the user's groups.
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/groups/
     """
     permission_classes = (IsAuthenticated,)
@@ -147,8 +146,7 @@ class ListCreateGroups(generics.ListCreateAPIView):
 
     def get_queryset(self):
         """
-        This view should return a list of all the questions
-        for the currently authenticated user.
+        This view should return a list of all groups for a user
         """
         return UserGroup.objects.filter(user=self.request.user)
 
@@ -169,7 +167,7 @@ class ListCreateGroups(generics.ListCreateAPIView):
 
 class ListCreateGroupUsers(generics.ListCreateAPIView):
     """
-    API endpoint that list the users in a group
+    API endpoint that lists the users in a group
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token"
     http://localhost:8000/api/app_one/groups/1/
@@ -192,11 +190,9 @@ class ListCreateGroupUsers(generics.ListCreateAPIView):
         This view should return a list of all the users for the group
         for the currently authenticated user.
         """
-
         group_id = self.kwargs.get(self.lookup_url_kwarg)
         one_group = OneGroup.objects.get(id=group_id)
 
-        # if one_group.creator.id != self.request.user.id:
         return UserGroup.objects.filter(group_id=group_id)
         # else:
         #     return None
@@ -240,7 +236,7 @@ class ListCreateGroupUsers(generics.ListCreateAPIView):
 
 class ListImages(generics.ListAPIView):
     """
-    API endpoint that list the user's questions, and allows an user to create a question.
+    API endpoint that lists the user's images
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/
     """
@@ -251,7 +247,7 @@ class ListImages(generics.ListAPIView):
 
     def get_queryset(self):
         """
-        This view should return a list of all the Images related to groups.
+        This view should return a list of all the images related to a user.
         """
         user_obj = self.request.user
         group_id_list = [x['id'] for x in user_obj.usergroup_set.values('id')]
@@ -264,7 +260,7 @@ class ListImages(generics.ListAPIView):
 
 class ListImageGroups(generics.ListAPIView):
     """
-    API endpoint that list the user's questions, and allows an user to create a question.
+    API endpoint that lists a group's images
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
     """
