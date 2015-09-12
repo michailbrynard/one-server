@@ -315,12 +315,15 @@ class CheckOne(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         # Check if user has posted photo for the day.
-        last_image = OneImage.objects.filter(user=self.request.user).latest('created_timestamp')
-
-        if datetime.today().day == last_image.created_timestamp.today().day:
-            snortie = SnortieLimiter.objects.all().order_by('?').first()
-            data = {"status": False, "message": snortie.message}
-        else:
+        try:
+            last_image = OneImage.objects.filter(user=self.request.user).latest('created_timestamp')
+            if datetime.today().day == last_image.created_timestamp.today().day:
+                snortie = SnortieLimiter.objects.all().order_by('?').first()
+                data = {"status": False, "message": snortie.message}
+            else:
+                data = {"status": True, "message": "You are still okay."}
+        except ObjectDoesNotExist:
+            last_image = None
             data = {"status": True, "message": "You are still okay."}
 
         data = {"status": True, "message": "You are still okay."}
