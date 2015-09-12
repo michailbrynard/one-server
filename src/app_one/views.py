@@ -1,8 +1,8 @@
 import base64
 from logging import getLogger
+from datetime import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.files.base import ContentFile
-from django.core.files.uploadedfile import InMemoryUploadedFile
 from rest_framework import viewsets, generics
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.response import Response
@@ -312,9 +312,14 @@ class CheckOne(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         # Check if user has posted photo for the day.
-        snortie = SnortieLimiter.objects.all().order_by('?').first()
-        data = {"message": snortie.message}
+        last_image = OneImage.objects.filter(user_id=11).latest('created_timestamp')
+
+        if datetime.today().day == last_image.created_timestamp.today().day:
+            snortie = SnortieLimiter.objects.all().order_by('?').first()
+            data = {"status": False, "message": snortie.message}
+        else:
+            data = {"status": True, "message": "You are still okay."}
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
 
-        return Response({"status": True, "message": serializer.data})
+        return Response(serializer.data)

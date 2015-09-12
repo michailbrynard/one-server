@@ -3,7 +3,7 @@ from django.contrib import admin
 
 
 class OneImageAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'image', 'description')
+    list_display = ('id', 'user', 'image', 'description', 'created_timestamp')
 
 
 class OneGroupAdmin(admin.ModelAdmin):

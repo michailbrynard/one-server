@@ -118,7 +118,8 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class SnortieLimiterSerializer(serializers.Serializer):
-    message = serializers.CharField()
+    message = serializers.CharField(default='You are still okay.')
+    status = serializers.CharField(default=False)
 
 
 # Custom Serializers
