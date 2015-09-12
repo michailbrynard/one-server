@@ -137,6 +137,7 @@ class ListUserGroupSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField(source='get_user')
     group = serializers.SerializerMethodField(source='get_group')
     last_upload = serializers.SerializerMethodField(source='get_last_upload')
+    created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = UserGroup
