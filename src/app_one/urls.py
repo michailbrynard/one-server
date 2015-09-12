@@ -33,11 +33,15 @@ urlpatterns = patterns('',
     # Router fields - API
     url(r'^', include(router.urls)),
 
+                       # Check one per day phot
+                       url(r'^one/$', views.CheckOne.as_view()),
+
     # Group feed
     url(r'^groups/$', views.ListCreateGroups.as_view()),
 
     # User feed
     url(r'^groups/(?P<group>\d+)/$', views.ListCreateGroupUsers.as_view()),
+                       # url(r'^groups/(?P<group>\d+)/users/$', views.ListGroupUsers.as_view()),
 
     # Images feed
     url(r'^images/$', views.ListImages.as_view()),

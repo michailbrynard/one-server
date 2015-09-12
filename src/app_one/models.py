@@ -143,3 +143,54 @@ class GroupImage(models.Model):
 
     def __str__(self):  # Python 3: def __str__(self):
         return self.user_group
+
+
+class SnortieReminder(models.Model):
+    # User id
+    creator = models.ForeignKey(UserBasic)
+    # Reminder message when user forgets to post a picture.
+    message = models.TextField(null=True, blank=True)
+
+    ACTIVE = 'A'
+    DISABLED = 'D'
+
+    # Status
+    STATUS = (
+        (ACTIVE, 'Active'),
+        (DISABLED, 'Disabled'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=STATUS,
+        default=ACTIVE,
+        null=False,
+        blank=False,
+    )
+    # Timestamp
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+
+
+class SnortieLimiter(models.Model):
+    # User id
+    creator = models.ForeignKey(UserBasic)
+    # Limiting message when user tries to post more than one picture per day.
+    message = models.TextField(null=True, blank=True)
+    # Status
+    ACTIVE = 'A'
+    DISABLED = 'D'
+
+    STATUS = (
+        (ACTIVE, 'Active'),
+        (DISABLED, 'Disabled'),
+    )
+
+    status = models.CharField(
+        max_length=1,
+        choices=STATUS,
+        default=ACTIVE,
+        null=False,
+        blank=False,
+    )
+    # Timestamp
+    created_timestamp = models.DateTimeField(auto_now_add=True)

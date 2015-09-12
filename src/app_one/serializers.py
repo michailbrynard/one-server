@@ -2,7 +2,7 @@ from base64 import b64decode
 from logging import getLogger
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
-from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany
+from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany, SnortieLimiter
 from administration.models import UserBasic
 from django.core.files.base import ContentFile
 
@@ -127,6 +127,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserBasic
         fields = ('id', 'username', 'first_name', 'last_name', 'birthday', 'gender', 'email', 'language', 'bio')
+
+
+class SnortieLimiterSerializer(serializers.Serializer):
+    message = serializers.CharField()
 
 
 # Custom Serializers

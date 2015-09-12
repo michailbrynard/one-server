@@ -1,0 +1,122 @@
+[
+  {
+    "model": "app_one.snortiereminder",
+    "pk": 1,
+    "fields": {
+      "creator": 11,
+      "message": "Be one, or be none.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortiereminder",
+    "pk": 2,
+    "fields": {
+      "creator": 11,
+      "message": "Don't forget to post to One, because you will die.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortiereminder",
+    "pk": 3,
+    "fields": {
+      "creator": 11,
+      "message": "Post bra, or One will kick you off..then you will be zero.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortiereminder",
+    "pk": 4,
+    "fields": {
+      "creator": 11,
+      "message": "All for One!",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortiereminder",
+    "pk": 5,
+    "fields": {
+      "creator": 11,
+      "message": "Once puppy, just once!",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortiereminder",
+    "pk": 6,
+    "fields": {
+      "creator": 11,
+      "message": "It is not one, two, three.. it is just One, One, One.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortielimiter",
+    "pk": 1,
+    "fields": {
+      "creator": 11,
+      "message": "Don't be a smart ass: only post once.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortielimiter",
+    "pk": 2,
+    "fields": {
+      "creator": 11,
+      "message": "We are Oners, not Twoers.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortielimiter",
+    "pk": 3,
+    "fields": {
+      "creator": 11,
+      "message": "If you post more than once, it is cheating.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortielimiter",
+    "pk": 4,
+    "fields": {
+      "creator": 11,
+      "message": "One is not Facebook.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortielimiter",
+    "pk": 5,
+    "fields": {
+      "creator": 11,
+      "message": "Be careful pal, we'll take away your One status.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.snortielimiter",
+    "pk": 6,
+    "fields": {
+      "creator": 11,
+      "message": "Don't be a photo sl**.",
+      "status": "A",
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  }
+]

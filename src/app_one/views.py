@@ -10,10 +10,11 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
-from app_one.models import OneGroup, UserGroup, GroupImage, OneImage, ImageMany
+from app_one.models import OneGroup, UserGroup, GroupImage, OneImage, ImageMany, SnortieLimiter
 from app_one.serializers import OneGroupHyperSerializer, UserGroupHyperSerializer, GroupImageHyperSerializer, \
     UserHyperSerializer, ListUserGroupSerializer, SubscribeUserToGroupSerializer, ListImageSerializer, \
-    ListAllImageSerializer, CreateGroupSerializer, OneImageHyperSerializer, ImageManyHyperSerializer
+    ListAllImageSerializer, CreateGroupSerializer, OneImageHyperSerializer, ImageManyHyperSerializer, \
+    SnortieLimiterSerializer
 
 from administration.models import UserBasic
 
@@ -172,11 +173,11 @@ class ListCreateGroupUsers(generics.ListCreateAPIView):
     API endpoint that list the users in a group
 
     curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token"
-    http://localhost:8000/api/app_one/groups/1/
+    http://localhost:8888/api/app_one/groups/1/
 
     curl -X POST -H "Content-Type: application/json" -H "Authorization: JWT token"
     -d '{"email": "email"}'
-    http://localhost:8000/api/app_one/groups/1/
+    http://localhost:8888/api/app_one/groups/1/
     """
     permission_classes = (IsAuthenticated,)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
@@ -301,3 +302,23 @@ class ListImageGroups(generics.ListAPIView):
     #     headers = self.get_success_headers(serializer.data)
     #     return Response({"status": "success", "results": serializer.data},
     #                     status=status.HTTP_201_CREATED, headers=headers)
+
+
+class CheckOne(generics.ListAPIView):
+    """
+    API endpoint that list the user's questions, and allows an user to create a question.
+
+    curl -X GET -H "Content-Type: application/json" -H "Authorization: JWT token" http://localhost:8888/api/images/1/
+    """
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+    serializer_class = SnortieLimiterSerializer
+
+    def get(self, request, *args, **kwargs):
+        # Check if user has posted photo for the day.
+        snortie = SnortieLimiter.objects.all().order_by('?').first()
+        data = {"message": snortie.message}
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response({"status": True, "message": serializer.data})
