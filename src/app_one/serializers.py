@@ -6,6 +6,9 @@ from app_one.models import OneImage, OneGroup, UserGroup, GroupImage, ImageMany,
 from administration.models import UserBasic
 from django.core.files.base import ContentFile
 
+logger = getLogger('django')
+
+
 # Hyperlink Api
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneGroupHyperSerializer(serializers.HyperlinkedModelSerializer):
@@ -34,8 +37,7 @@ class ImageManyHyperSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ImageMany
         fields = ('image', 'user', 'groups')
-        logger = getLogger('django')
-
+        
 
 class OneImageHyperSerializer(serializers.HyperlinkedModelSerializer):
     # group_image = GroupImageHyperSerializer()
@@ -72,19 +74,16 @@ class UserHyperSerializer(serializers.HyperlinkedModelSerializer):
 # Basic Serializers
 # ---------------------------------------------------------------------------------------------------------------------#
 class OneImageDisplaySerializer(serializers.ModelSerializer):
+    created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = OneImage
         fields = ('image', 'description', 'created_timestamp')
 
 
-class OneImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OneImage
-
-
 class OneGroupSerializer(serializers.ModelSerializer):
     creator = serializers.SerializerMethodField(source='get_creator')
+    created_timestamp = serializers.DateTimeField('%d %b %Y')
 
     class Meta:
         model = OneGroup
