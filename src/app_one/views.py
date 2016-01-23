@@ -369,7 +369,6 @@ class CheckOne(generics.ListAPIView):
             else:
                 data = {"status": True, "message": "You are still okay."}
         except ObjectDoesNotExist:
-            last_image = None
             data = {"status": True, "message": "You are still okay."}
 
         serializer = self.get_serializer(data=data)
