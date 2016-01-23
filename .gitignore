@@ -13,7 +13,7 @@ __pycache__
 # CONTENT
 var/cache/*
 var/www/static/*
-var/www/media/*
+#var/www/media/*
 tmp/*
 
 # FILES

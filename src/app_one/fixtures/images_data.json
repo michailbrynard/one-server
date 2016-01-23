@@ -1,0 +1,29 @@
+[
+  {
+    "model": "app_one.image",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "image": "one_images/one.jpg",
+      "description": "Image1"
+    }
+  },
+  {
+    "model": "app_one.image",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "image": "one_images/one.jpg",
+      "description": "Image2"
+    }
+  },
+  {
+    "model": "app_one.image",
+    "pk": 3,
+    "fields": {
+      "user": 2,
+      "image": "one_images/one.jpg",
+      "description": "Image2"
+    }
+  }
+]

@@ -9,6 +9,7 @@ from administration.models import UserBasic
 # ---------------------------------------------------------------------------------------------------------------------#
 from logging import getLogger
 from django.db.models.signals import post_save
+from app_one.exceptions import FriendsExistsException, UserFriendClashException, FriendAlreadyInvitedException
 
 logger = getLogger('django')
 
@@ -23,128 +24,55 @@ def get_group_icon_path(instance, filename):
     return os.path.join('group_icon', filename)
 
 
-class OneImage(models.Model):
-    # User id
+class Image(models.Model):
     user = models.ForeignKey(UserBasic)
-    # Image
     image = models.ImageField(upload_to=get_one_images_path, null=True, blank=True)
-    # Description
     description = models.CharField(max_length=200, null=True, blank=True)
-
-    # Timestamp
     created_timestamp = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    updated_timestamp = models.DateTimeField(auto_now=True, null=True, blank=True)    
 
 
-class OneGroup(models.Model):
-    # Creator id
-    creator = models.ForeignKey(UserBasic, verbose_name='Creator')
-    # Name
-    group_name = models.CharField(max_length=200, null=True, blank=True)
-    # Group icon
-    group_icon = models.ImageField(upload_to=get_group_icon_path, null=True, blank=True)
+class UserFriend(models.Model):
+    user = models.ForeignKey(UserBasic, related_name='user')
+    invite_reference = models.CharField(max_length=200, null=True, blank=True)
+    friend = models.ForeignKey(UserBasic, related_name='friend', null=True, blank=True)
 
-    # Group status
-    ACTIVE = 'A'
-    DISABLED = 'D'
-
+    # Friend status
     STATUS = (
-        (ACTIVE, 'Active'),
-        (DISABLED, 'Disabled'),
+        ('Invited', 'Invited'),
+        ('Pending', 'Pending'),
+        ('Friends', 'Friends'),
+        ('Declined', 'Declined'),
+        ('Removed', 'Removed'),
+        ('NotOnOneYet', 'NotOnOneYet')
     )
 
-    status = models.CharField(
-        max_length=1,
+    friend_status = models.CharField(
+        max_length=15,
         choices=STATUS,
-        default=ACTIVE,
+        default='Invited',
         null=False,
         blank=False,
     )
 
-    # Timestamp
-    created_timestamp = models.DateTimeField(auto_now_add=True)
+    invited_timestamp = models.DateTimeField(auto_now_add=True)
+    accepted_timestamp = models.DateTimeField(null=True, blank=True)
     updated_timestamp = models.DateTimeField(auto_now=True)
-
-    def __str__(self):  # Python 3: def __str__(self):
-        return self.group_name
-
-
-class ImageMany(models.Model):
-    # User id
-    user = models.ForeignKey(UserBasic)
-    # Image
-    image = models.ImageField(upload_to=get_one_images_path, null=True, blank=True)
-    # Description
-    description = models.CharField(max_length=200, null=True, blank=True)
-
-    groups = models.ManyToManyField('OneGroup')
-
-    # Timestamp
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-    updated_timestamp = models.DateTimeField(auto_now=True)
-
-
-class UserGroup(models.Model):
-    # User id
-    user = models.ForeignKey(UserBasic)
-    # Group id
-    group = models.ForeignKey(OneGroup)
-    # Timestamp
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-    updated_timestamp = models.DateTimeField(auto_now=True)
-
-    # Group status
-    ACTIVE = 'A'
-    DISABLED = 'D'
-
-    STATUS = (
-        (ACTIVE, 'Active'),
-        (DISABLED, 'Disabled'),
-    )
-
-    status = models.CharField(
-        max_length=1,
-        choices=STATUS,
-        default=ACTIVE,
-        null=False,
-        blank=False,
-    )
 
     def __str__(self):  # Python 3: def __str__(self):
         return self.user.email
 
+    def save(self, *args, **kwargs):
 
-class GroupImage(models.Model):
-    # Group id
-    user_group = models.ForeignKey(UserGroup)
-    # Image id
-    image = models.ForeignKey(OneImage)
-    # Timestamp
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-    updated_timestamp = models.DateTimeField(auto_now=True)
+        if UserBasic.objects.filter(email=self.invite_reference).exists():
+            friend = UserBasic.objects.get(email=self.invite_reference)
+            if UserFriend.objects.filter(user=self.user, friend=friend).exists():
+                raise FriendsExistsException()
+            elif self.user == friend:
+                raise UserFriendClashException()
+        elif UserFriend.objects.filter(invite_reference=self.invite_reference).exists():
+            raise FriendAlreadyInvitedException()
 
-    # Group status
-    ACTIVE = 'A'
-    DISABLED = 'D'
-
-    STATUS = (
-        (ACTIVE, 'Active'),
-        (DISABLED, 'Disabled'),
-    )
-
-    status = models.CharField(
-        max_length=1,
-        choices=STATUS,
-        default=ACTIVE,
-        null=False,
-        blank=False,
-    )
-
-    class Meta:
-        ordering = ('-created_timestamp', )
-
-    def __str__(self):  # Python 3: def __str__(self):
-        return self.user_group
+        super(UserFriend, self).save(*args, **kwargs)
 
 
 class SnortieReminder(models.Model):

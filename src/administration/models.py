@@ -1,6 +1,7 @@
 # IMPORTS
 # ---------------------------------------------------------------------------------------------------------------------#
 from logging import getLogger
+import os
 from django.conf import settings
 from django.contrib import auth
 from django.contrib.auth.models import AbstractBaseUser, UserManager, GroupManager, \
@@ -21,6 +22,11 @@ from django.utils import timezone
 
 
 logger = getLogger('django')
+
+
+def get_one_profile_images_path(instance, filename):
+    return os.path.join('profile_image', filename)
+
 
 # MODELS
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -134,6 +140,14 @@ class PermissionsMixin(models.Model):
         return _user_has_module_perms(self, app_label)
 
 
+# Status
+STATUS = (
+    ('Verified', 'Verified'),
+    ('Pending', 'Pending'),
+    ('Incomplete', 'Incomplete'),
+)
+
+
 class UserBasic(AbstractBaseUser, PermissionsMixin):
     """
     An abstract base class implementing a fully featured User model with
@@ -156,9 +170,12 @@ class UserBasic(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     email = models.EmailField(_('email address'), unique=True, blank=True,
-        error_messages={
-            'required': 'Email field is required.'
-    })
+                              error_messages={
+                                  'required': 'Email field is required.'
+                              })
+    email_status = models.CharField(max_length=24, choices=STATUS, null=True, blank=True)
+    mobile = models.CharField(max_length=20, null=True, blank=True)
+    mobile_status = models.CharField(max_length=24, choices=STATUS, null=True, blank=True)
 
     FEMALE = 'Female'
     MALE = 'Male'
@@ -178,6 +195,7 @@ class UserBasic(AbstractBaseUser, PermissionsMixin):
     birthday = models.DateField(null=True, blank=True)
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="en", null=True, blank=True)
     bio = models.TextField(blank=True)
+    profile_image = models.ImageField(upload_to=get_one_profile_images_path, null=True, blank=True)
 
     is_staff = models.BooleanField(_('staff status'), default=False,
         help_text=_('Designates whether the user can log into this admin '

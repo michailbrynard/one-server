@@ -18,13 +18,7 @@ logger = logging.getLogger('django')
 # ROUTERS
 # ---------------------------------------------------------------------------------------------------------------------#
 router = routers.DefaultRouter()
-router.register(r'hyper/groups', views.OneGroupHyper)
-router.register(r'hyper/user_groups', views.UserGroupHyper)
-router.register(r'hyper/group_images', views.GroupImageHyper)
-# router.register(r'image/', views.OneImageHyper)
-# router.register(r'image/many', views.ImageManyHyper)
 
-# router.register(r'hyper/image_upload', views.ImageUploadHyper)
 
 # URLS
 # ---------------------------------------------------------------------------------------------------------------------#
@@ -36,21 +30,15 @@ urlpatterns = patterns('',
                        # Check one per day photo
                        url(r'^one/$', views.CheckOne.as_view()),
 
-                       # Group feed
-                       url(r'^groups/$', views.ListCreateGroups.as_view()),
-
-                       # User feed
-                       url(r'^groups/(?P<group>\d+)/$', views.ListCreateGroupUsers.as_view()),
-
-                       # Delete user from group
-                       url(r'^groups/(?P<group>\d+)/delete/(?P<user>\d+)/$', views.ListDeleteGroupUsers.as_view()),
-
                        # Images feed
-                       url(r'^image/(?P<group_list>[0-9,]+)$', views.OneImageHyper.as_view()),
+                       url(r'^image/$', views.CreateImage.as_view()),
                        url(r'^images/$', views.ListImages.as_view()),
-                       url(r'^images/(?P<group>\d+)/$', views.ListImageGroups.as_view()),
 
                        # Add snorties
                        url(r'^snorties/$', views.CreateSnorties.as_view()),
+
+                       ###### NEW ######
+                       # List friends and add a friend
+                       url(r'^friends/$', views.ListCreateFriends.as_view()),
 
                        )
