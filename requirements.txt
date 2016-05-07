@@ -1,1 +1,36 @@
--r var/requirements/development.txt
+# Core dependencies
+django
+redis
+gunicorn
+celery
+psycopg2
+
+# SQS queues, SES, etc...
+boto
+
+# Adminstration app, social media auth and REST auth:
+django-allauth
+# requests-oauthlib, python3-openid, requests, oauthlib
+# django-allauth also installs django-rest-auth
+
+django-two-factor-auth
+# django-two-factor-auth also installs  qrcode, phonenumbers, django-otp, django-formtools, django-phonenumber-field
+# django-two-factor-auth also integrates with twilio and django-user-sessions
+
+django-user-sessions
+twilio
+
+# Enhanced login security
+django-axes
+djangorestframework
+
+# JWT Tokens and CORS headers needed for mobile apps
+djangorestframework-jwt
+django-cors-headers
+
+# API documentation
+django-rest-swagger
+
+# These were missing:
+django-rest-auth
+pillow

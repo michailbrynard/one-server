@@ -1,8 +1,0 @@
--r common.txt
-#pylint
-#pyflakes
-#flake8
-#coverage
-#pep8
-#django-jenkins
-django-debug-toolbar

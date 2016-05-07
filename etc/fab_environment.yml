@@ -1,0 +1,6 @@
+name: fab
+dependencies:
+- python=2.7
+- pip:
+  - python-dotenv
+  - fabric

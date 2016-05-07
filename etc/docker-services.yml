@@ -1,0 +1,43 @@
+db_data:
+  image: postgres
+  command: echo "DB data volume!"
+  volumes:
+    - /var/lib/postgresql/data
+
+postgres:
+  image: postgres
+#  volumes_from:
+#    - db_data
+  env_file:
+    - ${PWD}/${ENV_FILE}
+
+redis:
+  image: redis
+
+rabbitmq:
+  image: rabbitmq:3-management
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+  env_file:
+    - ${PWD}/${ENV_FILE}
+
+webapp:
+  image: ${IMAGE_NAME}
+#  build: ${PWD}
+#  ports:
+#    - "8000:8000"
+#  command: /docker-entrypoint.sh gunicorn
+#  links:
+#    - postgres:db
+#    - rabbitmq:rabbit-node
+#    - redis:redis
+  user: webapp
+  volumes:
+    - ${PWD}/src:/app
+    - ${PWD}/var:/var
+#    - /srv/apps/default/src:/app
+  env_file: ${PWD}/${ENV_FILE}
+  log_opt:
+    max-size: "500k"
+    max-file: "2"

@@ -5,7 +5,8 @@
     "fields": {
       "user": 2,
       "image": "one_images/one.jpg",
-      "description": "Image1"
+      "description": "Image1",
+      "created_timestamp": "2015-08-1 11:01"
     }
   },
   {
@@ -14,7 +15,8 @@
     "fields": {
       "user": 2,
       "image": "one_images/one.jpg",
-      "description": "Image2"
+      "description": "Image2",
+      "created_timestamp": "2015-08-1 11:01"
     }
   },
   {
@@ -23,7 +25,8 @@
     "fields": {
       "user": 2,
       "image": "one_images/one.jpg",
-      "description": "Image2"
+      "description": "Image3",
+      "created_timestamp": "2015-08-1 11:01"
     }
   }
 ]

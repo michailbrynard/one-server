@@ -167,22 +167,27 @@ class UserBasic(AbstractBaseUser, PermissionsMixin):
         error_messages={
             'unique': _("A user with that username already exists."),
         })
+
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
+
     email = models.EmailField(_('email address'), unique=True, blank=True,
                               error_messages={
                                   'required': 'Email field is required.'
                               })
     email_status = models.CharField(max_length=24, choices=STATUS, null=True, blank=True)
+
     mobile = models.CharField(max_length=20, null=True, blank=True)
     mobile_status = models.CharField(max_length=24, choices=STATUS, null=True, blank=True)
 
     FEMALE = 'Female'
     MALE = 'Male'
+    NOT_SPECIFIED = 'Not Specified'
 
     GENDER_CHOICES = (
         (FEMALE, 'Female'),
         (MALE, 'Male'),
+        (NOT_SPECIFIED, 'Not Specified'),
     )
 
     gender = models.CharField(
@@ -192,9 +197,11 @@ class UserBasic(AbstractBaseUser, PermissionsMixin):
         null=False,
         blank=False,
     )
+
     birthday = models.DateField(null=True, blank=True)
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default="en", null=True, blank=True)
     bio = models.TextField(blank=True)
+
     profile_image = models.ImageField(upload_to=get_one_profile_images_path, null=True, blank=True)
 
     is_staff = models.BooleanField(_('staff status'), default=False,

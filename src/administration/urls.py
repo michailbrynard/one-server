@@ -27,8 +27,6 @@ router.register(r'users', views.UserViewSet)
 # URLS
 # ---------------------------------------------------------------------------------------------------------------------#
 urlpatterns = patterns('',
-    # Static views
-    url(r'^grappelli/', include('grappelli.urls')),
 
     # Default auth
     url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),

@@ -30,15 +30,15 @@ urlpatterns = patterns('',
                        # Check one per day photo
                        url(r'^one/$', views.CheckOne.as_view()),
 
-                       # Images feed
+                       # # Images feed
                        url(r'^image/$', views.CreateImage.as_view()),
                        url(r'^images/$', views.ListImages.as_view()),
-
-                       # Add snorties
-                       url(r'^snorties/$', views.CreateSnorties.as_view()),
-
-                       ###### NEW ######
-                       # List friends and add a friend
-                       url(r'^friends/$', views.ListCreateFriends.as_view()),
+                       url(r'^images/(?P<user>\d+)/$$', views.ListUserImages.as_view()),
+                       #
+                       # # Add snorties
+                       # url(r'^snorties/$', views.CreateSnorties.as_view()),
+                       #
+                       # # List friends and add a friend
+                       # url(r'^friends/$', views.ListCreateFriends.as_view()),
 
                        )

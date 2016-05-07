@@ -1,0 +1,31 @@
+{
+  "name": "tpam",
+  "homepage": "https://github.com/jr-minnaar/tpam",
+  "authors": [
+    "JR Minnaar <jr.minnaar@gmail.com>"
+  ],
+  "description": "tpam",
+  "main": "",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals"
+  ],
+  "keywords": [
+    "tpam"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "js-cookie": "~2.1.0",
+    "jquery": "~2.2.1",
+    "bootstrap": "~3.3.6"
+  }
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "model": "app_one.userfollow",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "follow": 3,
+      "created_timestamp": "2015-08-1 11:01"
+    }
+  },
+  {
+    "model": "app_one.userfollow",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "follow": 4,
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.userfollow",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "follow": 3,
+      "created_timestamp": "2015-08-1 11:01"
+    }
+  },
+  {
+    "model": "app_one.userfollow",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "follow": 4,
+      "created_timestamp": "2015-08-1 11:02"
+    }
+  },
+  {
+    "model": "app_one.userfollow",
+    "pk": 1,
+    "fields": {
+      "user": 3,
+      "follow": 2,
+      "created_timestamp": "2015-08-1 11:04"
+    }
+  },
+  {
+    "model": "app_one.userfollow",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "follow": 2,
+      "created_timestamp": "2015-08-1 11:05"
+    }
+  }
+]

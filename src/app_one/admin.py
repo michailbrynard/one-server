@@ -14,12 +14,11 @@ class SnortieLimiterAdmin(admin.ModelAdmin):
     list_display = ('id', 'creator', 'message', 'status', 'created_timestamp')
 
 
-class UserFriendAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'friend', 'friend_status', 'invite_reference', 'invited_timestamp',
-                    'accepted_timestamp', 'updated_timestamp')
+class UserFollowAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'follow', 'created_timestamp')
 
 
 admin.site.register(Image, ImageAdmin)
 admin.site.register(SnortieLimiter, SnortieLimiterAdmin)
 admin.site.register(SnortieReminder, SnortieReminderAdmin)
-admin.site.register(UserFriend, UserFriendAdmin)
+admin.site.register(UserFollow, UserFollowAdmin)

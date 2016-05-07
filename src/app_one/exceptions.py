@@ -29,7 +29,8 @@ class FriendsExistsException(CheckException):
 
 class FriendAlreadyInvitedException(CheckException):
     def __init__(self):
-        self.detail = 'You have already invited this friend, but he doe snot have an account yet. Tell him to join One.'
+        self.detail = 'You have already invited this friend, but he does not have an account yet. ' \
+                      'Remind him to join One.'
 
     def __str__(self):
         return repr({'status': 'error', 'message': self.detail})
@@ -38,6 +39,46 @@ class FriendAlreadyInvitedException(CheckException):
 class UserFriendClashException(CheckException):
     def __init__(self):
         self.detail = "You can't be your own friend, idiot."
+
+    def __str__(self):
+        return repr({'status': 'error', 'message': self.detail})
+
+
+class RemoveUserFriendNotExistException(CheckException):
+    def __init__(self):
+        self.detail = "You can't remove a friend that is not a friend."
+
+    def __str__(self):
+        return repr({'status': 'error', 'message': self.detail})
+
+
+class InviteRepeatException(CheckException):
+    def __init__(self):
+        self.detail = "You have already executed this action. Doing it again makes no difference."
+
+    def __str__(self):
+        return repr({'status': 'error', 'message': self.detail})
+
+
+class InviteErrorException(CheckException):
+    def __init__(self):
+        self.detail = "Something went wrong when trying to invite this friend."
+
+    def __str__(self):
+        return repr({'status': 'error', 'message': self.detail})
+
+
+class FriendRejectedException(CheckException):
+    def __init__(self):
+        self.detail = "You can't be friends."
+
+    def __str__(self):
+        return repr({'status': 'error', 'message': self.detail})
+
+
+class DontTryLuckException(CheckException):
+    def __init__(self):
+        self.detail = "You can't try to invite and accept a friend at the same time."
 
     def __str__(self):
         return repr({'status': 'error', 'message': self.detail})

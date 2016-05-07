@@ -138,8 +138,7 @@ class Login(GenericAPIView):
     @csrf_exempt
     def login(self):
         self.user = self.serializer.validated_data['user']
-        self.token, created = self.token_model.objects.update_or_create(
-            user=self.user)
+        self.token, created = self.token_model.objects.update_or_create(user=self.user)
         # payload = jwt_payload_handler(self.user)
         # self.token = jwt_encode_handler(payload)
         if getattr(settings, 'REST_SESSION_LOGIN', True):
