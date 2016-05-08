@@ -8,34 +8,6 @@ webapp:
   ports:
     - 8010:8000
 
-task_scheduler:
-  extends:
-     service: webapp
-     file: ./etc/docker-services.yml
-  command: bash -c "celery -A config.celery worker --beat --schedule=/var/celerybeat-schedule --loglevel=INFO --concurrency=1 -Q dummy-queue"
-  links:
-    - redis
-    - rabbitmq
-
-worker_rates:
-  extends:
-     service: webapp
-     file: ./etc/docker-services.yml
-  command: bash -c "celery -A config.celery worker --loglevel=INFO --concurrency=1 -Q zapgo-update-rates2"
-  links:
-    - postgres
-    - redis
-    - rabbitmq
-
-worker_arbitrage:
-  extends:
-     service: webapp
-     file: ./etc/docker-services.yml
-  command: bash -c "celery -A config.celery worker --loglevel=INFO --concurrency=1 -Q zapgo-arbitrage2"
-  links:
-    - postgres
-    - redis
-    - rabbitmq
 
 #django:
 #  extends:
@@ -48,7 +20,7 @@ postgres:
   volumes_from:
     - db_data
   ports:
-    - '5435:5432'
+    - '5432:5432'
   env_file:
     - ${PWD}/${ENV_FILE}
 
@@ -58,12 +30,3 @@ db_data:
   volumes:
     - /var/lib/postgresql/data
 
-redis:
-  extends:
-    service: redis
-    file: ./etc/docker-services.yml
-
-rabbitmq:
-  extends:
-    service: rabbitmq
-    file: ./etc/docker-services.yml
